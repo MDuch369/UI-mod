@@ -3,11 +3,19 @@ types politics_panel_types
     type politics_panel_parliament = hbox {
         layoutpolicy_horizontal = expanding
 		layoutpolicy_vertical = expanding
+        
 
+        ### HOUSE WINDOW
         vbox = {
-            # parentanchor = top
+            spacing = 50
+            layoutpolicy_vertical = expanding
             layoutpolicy_horizontal = expanding
-            
+            # divider_decorative = {
+                # layoutpolicy_horizontal = expanding
+                # size = { 1000 3 }
+                # autoresize = yes
+            # }
+
             textbox = {
                 layoutpolicy_horizontal = expanding
                 autoresize = yes
@@ -20,155 +28,218 @@ types politics_panel_types
                 }
             }
 
-            ### HOUSE WINDOW
-            vbox = {
-                spacing = 50
-                layoutpolicy_vertical = expanding
+            hbox = {
                 layoutpolicy_horizontal = expanding
+                
+                textbox = {
+                    # minimumsize = { 500 50 }
+                    # layoutpolicy_horizontal = growing
+                    min_width = 150 
+                    text = "ACTIVITY"
+                    autoresize = yes
+                    using = fontsize_large
+                }
 
-
-
-                # divider_decorative = {
-                    # layoutpolicy_horizontal = expanding
-                    # size = { 1000 3 }
-                    # autoresize = yes
-                # }
-
-                widget = {
-                    size = { 500 500 }
-
-                    piechart = {
-                        visible = "[Not(GetVariableSystem.Exists('politics_piecharts'))]"
-                        size = { 75% 75% }
-                        # parentanchor = center
-                        position = { 0 -1 }
-                        datamodel = "[GetLoyaltyTypes]"
-
-                        item = {
-                            pieslice = {
-                                using = loyalty_slice_tooltip_with_graph
-                                value = "[LoyaltyType.GetCountryGraphicalRatio(Country.Self)]"
-                                color = "[LoyaltyType.GetColor]"
-                            }
-                        }
-                    }
+                textbox = {
+                    # minimumsize = { 500 50 }
+                    # layoutpolicy_horizontal = growing
+                    text = "IN_RECESS"
+                    autoresize = yes
+                    using = fontsize_large
                 }
 
                 expand = {}
             }
-
-            vertical_divider_stronger_full = {}
-
-            vbox = {
-                min_width = 500
-                layoutpolicy_vertical = expanding
-
-                ### POSITIONS
-                vbox = {
-                    spacing = 10
-                    margin = { 10 10 }
-                    layoutpolicy_vertical = growing
-                    layoutpolicy_horizontal = expanding
-
-                    textbox = {
-                        minimumsize = { 500 50 }
-                        layoutpolicy_horizontal = expanding
-                        text = "POSITIONS"
-                        autoresize = yes
-                        using = fontsize_large
-                        background = {
-                            using = default_header_bg_faded
+            
+            widget = {
+                size = { 600 550 }
+                # size = { 100% 100% }
+                
+                icon = {
+                    texture = "gfx/interface/backgrounds/round_frame_dec.dds"
+                    size = { 100% 100% }
+                    parentanchor = center
+                }
+                
+                piechart = {
+                    visible = "[Not(GetVariableSystem.Exists('politics_piecharts'))]"
+                    size = { 75% 75% }
+                    parentanchor = center
+                    position = { 0 -1 }
+                    datamodel = "[GetLoyaltyTypes]"
+                    item = {
+                        pieslice = {
+                            using = loyalty_slice_tooltip_with_graph
+                            value = "[LoyaltyType.GetCountryGraphicalRatio(Country.Self)]"
+                            color = "[LoyaltyType.GetColor]"
                         }
                     }
-
-                    hbox = {
-                        layoutpolicy_horizontal = expanding
-
-                        icon = {
-		    				texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-		    				size = { 50 50 }
-                            # align = left
-		    			}
-
-                        textbox = {
-                            text = "SPEAKER"
-                            autoresize = yes
-                        }
-                    }
-
-                    hbox = {
-                        layoutpolicy_horizontal = expanding
-
-                        icon = {
-		    				texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-		    				size = { 50 50 }
-		    			}
-
-                        textbox = {
-                            text = "HEAD_OF_MAJORITY"
-                            autoresize = yes
-                        }
-                    }
-
-                    hbox = {
-                        layoutpolicy_horizontal = expanding
-
-                        icon = {
-		    				texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-		    				size = { 50 50 }
-		    			}
-
-                        textbox = {
-                            text = "HEAD_OF_MINORITY"
-                            autoresize = yes
-
-                        }
-                    }
-
-
                 }
 
-                divider_decorative = {
-                    layoutpolicy_horizontal = expanding
-                    # size = { 300 3 }
+                icon = {
+                    texture = "gfx/interface/backgrounds/round_button_bg.dds"
+                    size = { 35% 35% }
+                    parentanchor = center
                 }
 
-                ### PARTIES
                 vbox = {
+                    # layoutpolicy_vertical = shrinking
                     spacing = 10
                     margin = { 10 10 }
-                    layoutpolicy_vertical = expanding
-                    layoutpolicy_horizontal = expanding
-
-                    textbox = {
-                        minimumsize = { 500 50 }
+                    position = { 0 45% }
+                    # size = { 100% 110% }
+                    
+                    default_header = {
                         layoutpolicy_horizontal = expanding
-                        autoresize = yes
-                        text = "FACTIONS"
-                        using = fontsize_large
-                        background = {
-                            using = default_header_bg_faded
+                        blockoverride "text"
+                        {
+                            text = "AGENDA"
                         }
                     }
-
+                    
                     textbox = {
-                        text = "PARTY_A"
+                        # minimumsize = { 500 50 }
+                        layoutpolicy_horizontal = expanding
+                        text = "NAPPING"
                         autoresize = yes
+                        using = fontsize_large
                     }
 
                     textbox = {
-                        text = "PARTY_B"
+                        # minimumsize = { 500 50 }
+                        layoutpolicy_horizontal = expanding
+                        text = "INCREASING_OWN_WAGES"
                         autoresize = yes
+                        using = fontsize_large
                     }
 
                     textbox = {
-                        text = "PARTY_C"
+                        # minimumsize = { 500 50 }
+                        layoutpolicy_horizontal = expanding
+                        text = "IGNORING_URGENT_ISSUES"
                         autoresize = yes
+                        using = fontsize_large
+                    }
+
+                    textbox = {
+                        # minimumsize = { 500 50 }
+                        layoutpolicy_horizontal = expanding
+                        text = "PRETENDING_TO_BE_IMPORTANT"
+                        autoresize = yes
+                        using = fontsize_large
                     }
 
                     expand = {}
+
+                    background = {
+                        using = default_background
+                    }
                 }
+            }
+            expand = {}
         }
+
+        vertical_divider_stronger_full = {}
+
+        vbox = {
+            min_width = 500
+            layoutpolicy_vertical = expanding
+            
+            ### POSITIONS
+            vbox = {
+                spacing = 10
+                margin = { 10 10 }
+                layoutpolicy_vertical = growing
+                layoutpolicy_horizontal = expanding
+               
+                textbox = {
+                    minimumsize = { 500 50 }
+                    layoutpolicy_horizontal = expanding
+                    text = "POSITIONS"
+                    autoresize = yes
+                    using = fontsize_large
+                    background = {
+                        using = default_header_bg_faded
+                    }
+                }
+
+                hbox = {
+                    layoutpolicy_horizontal = expanding
+                    icon = {
+						texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
+						size = { 50 50 }
+                        # align = left
+					}
+                    textbox = {
+                        text = "SPEAKER"
+                        autoresize = yes
+                    }
+                }
+
+                hbox = {
+                    layoutpolicy_horizontal = expanding
+                    icon = {
+						texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
+						size = { 50 50 }
+					}
+                    textbox = {
+                        text = "HEAD_OF_MAJORITY"
+                        autoresize = yes
+                    }
+                }
+
+                hbox = {
+                    layoutpolicy_horizontal = expanding
+                    icon = {
+						texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
+						size = { 50 50 }
+					}
+                    textbox = {
+                        text = "HEAD_OF_MINORITY"
+                        autoresize = yes
+                    }
+                }
+            }
+
+            divider_decorative = {
+                layoutpolicy_horizontal = expanding
+                # size = { 300 3 }
+            }
+
+            ### PARTIES
+            vbox = {
+                spacing = 10
+                margin = { 10 10 }
+                layoutpolicy_vertical = expanding
+                layoutpolicy_horizontal = expanding
+                textbox = {
+                    minimumsize = { 500 50 }
+                    layoutpolicy_horizontal = expanding
+                    autoresize = yes
+                    text = "FACTIONS"
+                    using = fontsize_large
+                    background = {
+                        using = default_header_bg_faded
+                    }
+                }
+
+                textbox = {
+                    text = "PARTY_A"
+                    autoresize = yes
+                }
+
+                textbox = {
+                    text = "PARTY_B"
+                    autoresize = yes
+                }
+
+                textbox = {
+                    text = "PARTY_C"
+                    autoresize = yes
+                }
+
+                expand = {}
+            }
         }
     }
 }
