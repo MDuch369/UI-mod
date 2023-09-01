@@ -7,7 +7,7 @@ types politics_panel_types
 
         ### HOUSE WINDOW
         vbox = {
-            spacing = 50
+            spacing = 5
             layoutpolicy_vertical = expanding
             layoutpolicy_horizontal = expanding
             # divider_decorative = {
@@ -31,6 +31,8 @@ types politics_panel_types
             hbox = {
                 layoutpolicy_horizontal = expanding
                 
+                expand = {}
+
                 textbox = {
                     # minimumsize = { 500 50 }
                     # layoutpolicy_horizontal = growing
@@ -51,9 +53,12 @@ types politics_panel_types
                 expand = {}
             }
             
-            widget = {
-                size = { 600 550 }
+            container = {
+                # size = { 700 650 }
                 # size = { 100% 100% }
+                minimumsize = { 900 850 }
+                # position = { 0 -200 }
+                # parentanchor = center
                 
                 icon = {
                     texture = "gfx/interface/backgrounds/round_frame_dec.dds"
@@ -78,61 +83,94 @@ types politics_panel_types
 
                 icon = {
                     texture = "gfx/interface/backgrounds/round_button_bg.dds"
-                    size = { 35% 35% }
+                    size = { 33% 33% }
                     parentanchor = center
                 }
 
-                vbox = {
-                    # layoutpolicy_vertical = shrinking
-                    spacing = 10
-                    margin = { 10 10 }
-                    position = { 0 45% }
-                    # size = { 100% 110% }
+                container = {
+                    parentanchor = left|vcenter
+                    minimumsize = { 900 500 }
                     
-                    default_header = {
-                        layoutpolicy_horizontal = expanding
-                        blockoverride "text"
-                        {
+
+                    vbox = {
+                        spacing = 10
+                        margin = { 5 0 }
+                        position = { 0 45% }
+
+                        # default_header = {
+                            # layoutpolicy_horizontal = expanding
+                            # blockoverride "text"
+                            # {
+                                # text = "AGENDA"
+                            # }
+                        # }
+                            
+                        textbox = {
+                            size = { 100% 50 }
+                            layoutpolicy_horizontal = expanding
                             text = "AGENDA"
+                            align = hcenter
+                            using = fontsize_large
+                            background = {
+                                using = default_header_bg_faded
+                            }
                         }
-                    }
-                    
-                    textbox = {
-                        # minimumsize = { 500 50 }
-                        layoutpolicy_horizontal = expanding
-                        text = "NAPPING"
-                        autoresize = yes
-                        using = fontsize_large
-                    }
 
-                    textbox = {
-                        # minimumsize = { 500 50 }
-                        layoutpolicy_horizontal = expanding
-                        text = "INCREASING_OWN_WAGES"
-                        autoresize = yes
-                        using = fontsize_large
-                    }
+                        textbox = {
+                            # minimumsize = { 500 50 }
+                            layoutpolicy_horizontal = expanding
+                            text = "NAPPING"
+                            autoresize = yes
+                            using = fontsize_large
+                        }
 
-                    textbox = {
-                        # minimumsize = { 500 50 }
-                        layoutpolicy_horizontal = expanding
-                        text = "IGNORING_URGENT_ISSUES"
-                        autoresize = yes
-                        using = fontsize_large
-                    }
+                        divider_decorative = {
+                            layoutpolicy_horizontal = expanding
+                        }
 
-                    textbox = {
-                        # minimumsize = { 500 50 }
-                        layoutpolicy_horizontal = expanding
-                        text = "PRETENDING_TO_BE_IMPORTANT"
-                        autoresize = yes
-                        using = fontsize_large
-                    }
+                        textbox = {
+                            # minimumsize = { 500 50 }
+                            layoutpolicy_horizontal = expanding
+                            text = "INCREASING_OWN_WAGES"
+                            autoresize = yes
+                            using = fontsize_large
+                        }
 
-                    expand = {}
+                        divider_decorative = {
+                            layoutpolicy_horizontal = expanding
+                        }
 
-                    background = {
-                        using = default_background
+                        textbox = {
+                            # minimumsize = { 500 50 }
+                            layoutpolicy_horizontal = expanding
+                            text = "IGNORING_URGENT_ISSUES"
+                            autoresize = yes
+                            using = fontsize_large
+                        }
+
+                        divider_decorative = {
+                            layoutpolicy_horizontal = expanding
+                        }
+
+                        textbox = {
+                            # minimumsize = { 500 50 }
+                            layoutpolicy_horizontal = expanding
+                            text = "PRETENDING_TO_BE_IMPORTANT"
+                            autoresize = yes
+                            using = fontsize_large
+                        }
+
+                        divider_decorative = {
+                            layoutpolicy_horizontal = expanding
+                        }
+
+                        expand = {}
+
+                        background = {
+                            using = default_background
+                            # using = frame_small
+                            # using = frame_small_mask
+                        }
                     }
                 }
             }
@@ -153,8 +191,9 @@ types politics_panel_types
                 layoutpolicy_horizontal = expanding
                
                 textbox = {
-                    minimumsize = { 500 50 }
+                    minimumsize = { 500 60 }
                     layoutpolicy_horizontal = expanding
+                    align = hcenter
                     text = "POSITIONS"
                     autoresize = yes
                     using = fontsize_large
@@ -174,6 +213,7 @@ types politics_panel_types
                         text = "SPEAKER"
                         autoresize = yes
                     }
+                    expand = {}
                 }
 
                 hbox = {
@@ -186,6 +226,7 @@ types politics_panel_types
                         text = "HEAD_OF_MAJORITY"
                         autoresize = yes
                     }
+                    expand = {}
                 }
 
                 hbox = {
@@ -198,12 +239,8 @@ types politics_panel_types
                         text = "HEAD_OF_MINORITY"
                         autoresize = yes
                     }
+                    expand = {}
                 }
-            }
-
-            divider_decorative = {
-                layoutpolicy_horizontal = expanding
-                # size = { 300 3 }
             }
 
             ### PARTIES
@@ -216,6 +253,7 @@ types politics_panel_types
                     minimumsize = { 500 50 }
                     layoutpolicy_horizontal = expanding
                     autoresize = yes
+                    align = hcenter
                     text = "FACTIONS"
                     using = fontsize_large
                     background = {
@@ -223,21 +261,54 @@ types politics_panel_types
                     }
                 }
 
-                textbox = {
-                    text = "PARTY_A"
-                    autoresize = yes
+                hbox = {
+                    layoutpolicy_horizontal = expanding
+                    textbox = {
+                        text = "OLD_FARTS_PARTY"
+                        autoresize = yes
+                    }
+                    expand = {}
                 }
-
-                textbox = {
-                    text = "PARTY_B"
-                    autoresize = yes
+                hbox = {
+                    layoutpolicy_horizontal = expanding
+                    textbox = {
+                        text = "SOMEHOW_EVEN_OLDER_FARTS_PARTY"
+                        autoresize = yes
+                    }
+                    expand = {}
                 }
-
-                textbox = {
-                    text = "PARTY_C"
-                    autoresize = yes
+                hbox = {
+                    layoutpolicy_horizontal = expanding
+                    textbox = {
+                        text = "JUDEAN_PEOPLES_FRONT"
+                        autoresize = yes
+                    }
+                    expand = {}
                 }
-
+                hbox = {
+                    layoutpolicy_horizontal = expanding
+                    textbox = {
+                        text = "PEOPLES_FRONT_OF_JUDEA"
+                        autoresize = yes
+                    }
+                    expand = {}
+                }
+                hbox = {
+                    layoutpolicy_horizontal = expanding
+                    textbox = {
+                        text = "POPULAR_JUDEAN_FRONT"
+                        autoresize = yes
+                    }
+                    expand = {}
+                }
+                hbox = {
+                    layoutpolicy_horizontal = expanding
+                    textbox = {
+                        text = "THEESE_GUYS"
+                        autoresize = yes
+                    }
+                    expand = {}
+                }
                 expand = {}
             }
         }
