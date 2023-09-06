@@ -714,7 +714,7 @@ types politics_panel_types
 					autoresize = yes
 					layoutpolicy_horizontal = expanding
 					size = { 100% 30 }
-					text = "Cabinet"
+					text = "CABINET"
 					parentanchor = left|hcenter
 					align = left|nobaseline
 					using = fontsize_xxl
@@ -722,11 +722,12 @@ types politics_panel_types
 
 				hbox = {
 					layoutpolicy_horizontal = expanding
+					spacing = 20
 					
 					textbox = {
 						autoresize = yes
 						layoutpolicy_horizontal = growing
-						text = "head_of_government"
+						text = "HEAD_OF_GOVERNMENT"
 						using = fontsize_large
 						align = right
 					}
@@ -1090,10 +1091,6 @@ types politics_panel_types
 									visible = "[Character.IsValid]"
 									size = { 60 60 }
 									texture = "[Party.GetIcon]"
-				
-									tooltipwidget = {
-										FancyTooltip_Law = {}
-									}
 								}
 							}
 
@@ -1367,79 +1364,23 @@ types politics_panel_types
 			layoutpolicy_horizontal = preferred
 			layoutpolicy_vertical = preferred
 			visible = "[GetVariableSystem.Exists('cabinet_positions_expanded')]"
-			# block "laws_without_support_datamodel" {
-				# datamodel = "[AccessPlayer.AccessLawsWithoutGovernmentOrMovementSupport]"
-			# }
+			datamodel = "[AccessPlayer.AccessInstitutions]"
 			spacing = 15
 
-			vbox = {
-				layoutpolicy_horizontal = preferred
-				layoutpolicy_vertical = preferred
-				# enactable_generic_law3 = {}
+			item = {
 				hbox = {
 					layoutpolicy_horizontal = expanding
 					textbox = {
-						text = "ministry_of_silly_walks"
-						autoresize = yes
+						size = { 0 30 }
+						text = "Ministry of [Institution.GetNameNoFormatting]"
+						using = fontsize_large
 						layoutpolicy_horizontal = expanding
-						size = { 100% 30 }
-						parentanchor = left|hcenter
-						align = left|nobaseline
-						using = fontsize_xxl
+						using = fontsize_large
 					}
-
 					add_character_button = {
-						# texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						# size = { 60 60 }
+						size = { 60 60 }
 					}
 				}
-				
-			}
-			vbox = {
-				layoutpolicy_horizontal = preferred
-				layoutpolicy_vertical = preferred
-				# enactable_generic_law3 = {}
-				hbox = {
-					layoutpolicy_horizontal = expanding
-					textbox = {
-						text = "ministry_of_sillier_walks"
-						autoresize = yes
-						layoutpolicy_horizontal = expanding
-						size = { 100% 30 }
-						parentanchor = left|hcenter
-						align = left|nobaseline
-						using = fontsize_xxl
-					}
-
-					icon = {
-						texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						size = { 40 40 }
-					}
-				}
-				
-			}
-			vbox = {
-				layoutpolicy_horizontal = preferred
-				layoutpolicy_vertical = preferred
-				# enactable_generic_law3 = {}
-				hbox = {
-					layoutpolicy_horizontal = expanding
-					textbox = {
-						text = "ministry_of_inventing_new_ministeries"
-						autoresize = yes
-						layoutpolicy_horizontal = expanding
-						size = { 100% 30 }
-						parentanchor = left|hcenter
-						align = left|nobaseline
-						using = fontsize_xxl
-					}
-
-					icon = {
-						texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						size = { 40 40 }
-					}
-				}
-				
 			}
 		}	
 	}
