@@ -988,26 +988,36 @@ types politics_panel_types
 				alpha = 0.5
 			}
 
-			fixedgridbox = {
-				# layoutpolicy_horizontal = expanding
+			vbox = {
+				layoutpolicy_horizontal = expanding
 				# spacing = 10
 				# margin = { 20 10 }
 				visible = "[Not(IsDataModelEmpty(PoliticsPanel.GetAgitatorSlots))]"
 				datamodel = "[AccessPlayer.AccessInterestGroupsInGovernment]"
-				datamodel_wrap = 3
 				addcolumn = 120
 				addrow = 120
-				flipdirection = yes
 
 
 				item = {
-					widget = {
-						size = { 120 120 }
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						# layoutpolicy_vertical = preferred
+						margin = { 10 10 }
+						spacing = 5
+				
+						using = entry_bg_fancy_solid_bg
+						datacontext = "[Character.GetInterestGroup]"
+				
+						background = {
+							using = fade_right_entry_fancy_header_colored
+							color = "[InterestGroup.GetColor]"
+						}
 						datacontext = "[InterestGroup.GetLeader]"
 						
+
 						character_portrait_large = {
 							visible = "[Character.IsValid]"
-							parentanchor = center
+							parentanchor = left
 							using = tooltip_below
 							
 							blockoverride "show_hat" {}
@@ -1034,6 +1044,66 @@ types politics_panel_types
 							}
 
 						}
+						vbox = {
+							textbox = {
+								layoutpolicy_horizontal = expanding
+								align = left
+								autoresize = yes
+								text = "[Character.GetFullName]"
+							}
+
+							textbox = {
+								layoutpolicy_horizontal = expanding
+								align = left
+								autoresize = yes
+								text = "CHARACTER_POPULARITY_LABEL"
+							}
+
+							dynamicgridbox = {
+								datamodel = "[Character.AccessTraits]"
+								datamodel_wrap = 2
+								flipdirection = yes
+				
+								item = {
+									character_trait_with_label = {}
+								}
+							}
+
+						}
+						expand = {}
+
+						vbox = {
+							layoutpolicy_vertical = preferred
+							layoutpolicy_horizontal = expanding
+							
+							hbox = {
+								layoutpolicy_horizontal = preferred
+								datacontext = "[Character.GetInterestGroup]"
+								datacontext = "[InterestGroup.GetParty]"
+
+								textbox = {
+									autoresize = yes
+									text = "[Party.GetName]"
+								}
+
+								icon = {
+									visible = "[Character.IsValid]"
+									size = { 60 60 }
+									texture = "[Party.GetIcon]"
+				
+									tooltipwidget = {
+										FancyTooltip_Law = {}
+									}
+								}
+							}
+
+							button = {
+								using = default_button_primary_action
+								size = { 150 40 }
+								text = "ASSIGN"
+							}
+						}
+
 					}
 						# exiled_agitator = {
 						# visible = "[Or( And( GetVariableSystem.Exists('politics_overview_exile_pool_show_available'), Character.GetInteraction('invite_exile').IsCommandValid(Character.Self)),  And(Not(GetVariableSystem.Exists('politics_overview_exile_pool_show_available')), Or(Not(Character.GetInteraction('invite_exile').IsCommandValid(Character.Self)), Character.GetInteraction('invite_exile').IsCommandValid(Character.Self)) ) )]"
