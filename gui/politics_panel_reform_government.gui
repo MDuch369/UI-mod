@@ -702,6 +702,7 @@ types politics_panel_types
 				size = { 80% 10 }
 			}
 
+			### CABINET OVERVIEW
 			hbox = {
 				name = "cabinet_positions"
 				layoutpolicy_horizontal = expanding
@@ -725,39 +726,19 @@ types politics_panel_types
 					textbox = {
 						autoresize = yes
 						layoutpolicy_horizontal = growing
-						text = "Head of Government"
+						text = "head_of_government"
 						using = fontsize_large
 						align = right
 					}
 
-					icon = {
-						texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						size = { 50 50 }
+					add_character_button = {
+						# size = { 75 75 }
+						blockoverride "onclick" {
+							onclick = "[GetVariableSystem.Toggle('politics_assign_cabinet')]"
+							onclick = "[AgitatorSlot.EnableInvite]"
+							clicksound = "event:/SFX/DLC/1.3_ip1/UI/exile_pool_open"
+						}
 					}
-					
-					# textbox = {
-						# autoresize = yes
-						# layoutpolicy_horizontal = growing
-						# text = "Ministers"
-						# using = fontsize_large
-						# align = right
-					# }
-					# icon = {
-						# texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						# size = { 40 40 }
-					# }
-					# icon = {
-						# texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						# size = { 40 40 }
-					# }
-					# icon = {
-						# texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						# size = { 40 40 }
-					# }
-					# icon = {
-						# texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						# size = { 40 40 }
-					# }
 				}
 			}
 
@@ -830,12 +811,14 @@ types politics_panel_types
 		
 		### OPPOSITION
 		vbox = {
+			visible = "[Not(GetVariableSystem.Exists('politics_assign_cabinet'))]"
 			margin_right = 5
 			margin_left = 10
 			layoutstretchfactor_horizontal = 2
 			layoutpolicy_horizontal = expanding
 			layoutpolicy_vertical = expanding
 			datacontext = "[GetPlayer]"
+			using = default_fade_in_out
 			
 			background = {
 				using = dark_area
@@ -923,6 +906,141 @@ types politics_panel_types
 				blockoverride "move_to_opposition_button_party" {}
 			}
 			
+			widget = {
+				layoutpolicy_horizontal = preferred
+				layoutpolicy_vertical = expanding
+			}
+		}
+
+		### CABINET ASSIGNMENT WINDOW
+		vbox = {
+			visible = "[GetVariableSystem.Exists('politics_assign_cabinet')]"
+			margin_right = 5
+			margin_left = 10
+			layoutstretchfactor_horizontal = 2
+			layoutpolicy_horizontal = expanding
+			layoutpolicy_vertical = expanding
+			datacontext = "[GetPlayer]"
+			using = default_fade_in_out
+			
+			background = {
+				using = dark_area
+				
+				modify_texture = {
+					texture = "gfx/interface/masks/fade_vertical_center.dds"
+					spriteType = Corneredstretched
+					spriteborder = { 0 0 }
+					blend_mode = alphamultiply
+				}
+				modify_texture = {
+					texture = "gfx/interface/masks/fade_horizontal_less_right.dds"
+					spriteType = Corneredstretched
+					spriteborder = { 0 0 }
+					blend_mode = alphamultiply
+				}
+			}
+			
+			### HEADER
+			hbox = {
+				name = "tutorial_highlight_opposition_title"		
+				spacing = 5
+				margin = { 5 8 }
+				layoutpolicy_horizontal = preferred
+				tooltip = IN_OPPOSITION_DESC
+
+				background = {
+					using = default_header_bg_faded
+				}
+				
+				widget = {
+					layoutpolicy_horizontal = expanding
+					size = { 0 30 }
+				}
+				
+				hbox = {
+					layoutpolicy_horizontal = preferred
+					layoutpolicy_vertical = preferred
+					tooltip = IN_OPPOSITION_DESC
+					spacing = 10
+				
+					textbox = {
+						autoresize = yes
+						text = "ASSIGN_CABINET"
+						align = right|nobaseline
+						elide = right
+						default_format = "#title"
+						using = fontsize_large
+					}
+					icon = {
+						texture = "gfx/interface/icons/generic_icons/in_opposition_icon.dds"
+						size = { 30 30 }
+					}
+				}
+			}
+			
+			textbox = {
+				layoutpolicy_horizontal = preferred
+				visible = "[And(IsDataModelEmpty(AccessPlayer.GetPartiesInOpposition),IsDataModelEmpty(AccessPlayer.GetIndependentInterestGroupsInOpposition))]"
+				text = "NO_CANDIDATES"
+				using = fontsize_xl
+				align = center|nobaseline
+				size = { 0 100 }
+				alpha = 0.5
+			}
+
+			fixedgridbox = {
+				# layoutpolicy_horizontal = expanding
+				# spacing = 10
+				# margin = { 20 10 }
+				visible = "[Not(IsDataModelEmpty(PoliticsPanel.GetAgitatorSlots))]"
+				datamodel = "[AccessPlayer.AccessInterestGroupsInGovernment]"
+				datamodel_wrap = 3
+				addcolumn = 120
+				addrow = 120
+				flipdirection = yes
+
+
+				item = {
+					widget = {
+						size = { 120 120 }
+						datacontext = "[InterestGroup.GetLeader]"
+						
+						character_portrait_large = {
+							visible = "[Character.IsValid]"
+							parentanchor = center
+							using = tooltip_below
+							
+							blockoverride "show_hat" {}
+							blockoverride "highlight" {}
+							
+							### IG ICON
+							character_ig_button = {
+								parentanchor = bottom|left
+								size = { 38 38 }
+								position = { 2 0 }
+								blockoverride "in_government_icon" {}
+							}
+							
+							### IDEOLOGY
+							icon = {
+								parentanchor = bottom|right
+								size = { 38 38 }
+								position = { -2 0 }
+								datacontext = "[Character.GetIdeology]"
+								texture = "[Ideology.GetTexture]"
+								tooltipwidget = {
+									FancyTooltip_Ideology = {}
+								}
+							}
+
+						}
+					}
+						# exiled_agitator = {
+						# visible = "[Or( And( GetVariableSystem.Exists('politics_overview_exile_pool_show_available'), Character.GetInteraction('invite_exile').IsCommandValid(Character.Self)),  And(Not(GetVariableSystem.Exists('politics_overview_exile_pool_show_available')), Or(Not(Character.GetInteraction('invite_exile').IsCommandValid(Character.Self)), Character.GetInteraction('invite_exile').IsCommandValid(Character.Self)) ) )]"
+					# }
+				}
+			}
+
 			widget = {
 				layoutpolicy_horizontal = preferred
 				layoutpolicy_vertical = expanding
@@ -1173,7 +1291,7 @@ types politics_panel_types
 			}
 		}
 		
-		### CABINET POSITIONS LIST
+		### THE LIST
 		vbox = {
 			margin = { 0 8 }
 			layoutpolicy_horizontal = preferred
@@ -1200,9 +1318,9 @@ types politics_panel_types
 						using = fontsize_xxl
 					}
 
-					icon = {
-						texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						size = { 40 40 }
+					add_character_button = {
+						# texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
+						# size = { 60 60 }
 					}
 				}
 				
