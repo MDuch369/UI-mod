@@ -703,41 +703,47 @@ types politics_panel_types
 			}
 
 			### CABINET OVERVIEW
-			hbox = {
-				name = "cabinet_positions"
+			vbox = {
 				layoutpolicy_horizontal = expanding
-				# background = {
-					# using = default_header_bg_faded
-					# }
-					
-				textbox = {
-					autoresize = yes
+
+				default_header_clean_faded = {
 					layoutpolicy_horizontal = expanding
-					size = { 100% 30 }
-					text = "CABINET"
-					parentanchor = left|hcenter
-					align = left|nobaseline
-					using = fontsize_xxl
+					blockoverride "text" {
+						text = "CABINET"
+					}
 				}
 
 				hbox = {
+					name = "cabinet_positions"
 					layoutpolicy_horizontal = expanding
-					spacing = 20
-					
-					textbox = {
-						autoresize = yes
-						layoutpolicy_horizontal = growing
-						text = "HEAD_OF_GOVERNMENT"
-						using = fontsize_large
-						align = right
-					}
 
-					add_character_button = {
-						# size = { 75 75 }
-						blockoverride "onclick" {
-							onclick = "[GetVariableSystem.Toggle('politics_assign_cabinet')]"
-							onclick = "[AgitatorSlot.EnableInvite]"
-							clicksound = "event:/SFX/DLC/1.3_ip1/UI/exile_pool_open"
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						spacing = 20
+						
+						# textbox = {
+							# autoresize = yes
+							# layoutpolicy_horizontal = growing
+							# text = "HEAD_OF_GOVERNMENT"
+							# using = fontsize_large
+							# align = right
+						# }
+
+						add_character_button = {
+							# size = { 75 75 }
+							blockoverride "onclick" {
+								onclick = "[GetVariableSystem.Toggle('politics_assign_cabinet')]"
+								onclick = "[AgitatorSlot.EnableInvite]"
+								clicksound = "event:/SFX/DLC/1.3_ip1/UI/exile_pool_open"
+							}
+						}
+
+						# expand = {}
+
+						button = {
+							using = default_button_action
+							size = { 250 40 }
+							text = "DISMISS_GOVERNMENT"
 						}
 					}
 				}
@@ -745,8 +751,6 @@ types politics_panel_types
 
 			cabinet_positions_list = {
 				visible = "[Not(GetVariableSystem.Exists('reform_government'))]"
-				
-				# blockoverride "laws_has_changed_text" {}
 			}
 			
 			divider_decorative = {
@@ -914,203 +918,9 @@ types politics_panel_types
 		}
 
 		### CABINET ASSIGNMENT WINDOW
-		vbox = {
-			visible = "[GetVariableSystem.Exists('politics_assign_cabinet')]"
-			margin_right = 5
-			margin_left = 10
-			layoutstretchfactor_horizontal = 2
-			layoutpolicy_horizontal = expanding
-			layoutpolicy_vertical = expanding
-			datacontext = "[GetPlayer]"
-			using = default_fade_in_out
-			
-			background = {
-				using = dark_area
-				
-				modify_texture = {
-					texture = "gfx/interface/masks/fade_vertical_center.dds"
-					spriteType = Corneredstretched
-					spriteborder = { 0 0 }
-					blend_mode = alphamultiply
-				}
-				modify_texture = {
-					texture = "gfx/interface/masks/fade_horizontal_less_right.dds"
-					spriteType = Corneredstretched
-					spriteborder = { 0 0 }
-					blend_mode = alphamultiply
-				}
-			}
-			
-			### HEADER
-			hbox = {
-				name = "tutorial_highlight_opposition_title"		
-				spacing = 5
-				margin = { 5 8 }
-				layoutpolicy_horizontal = preferred
-				tooltip = IN_OPPOSITION_DESC
-
-				background = {
-					using = default_header_bg_faded
-				}
-				
-				widget = {
-					layoutpolicy_horizontal = expanding
-					size = { 0 30 }
-				}
-				
-				hbox = {
-					layoutpolicy_horizontal = preferred
-					layoutpolicy_vertical = preferred
-					tooltip = IN_OPPOSITION_DESC
-					spacing = 10
-				
-					textbox = {
-						autoresize = yes
-						text = "ASSIGN_CABINET"
-						align = right|nobaseline
-						elide = right
-						default_format = "#title"
-						using = fontsize_large
-					}
-					icon = {
-						texture = "gfx/interface/icons/generic_icons/in_opposition_icon.dds"
-						size = { 30 30 }
-					}
-				}
-			}
-			
-			textbox = {
-				layoutpolicy_horizontal = preferred
-				visible = "[And(IsDataModelEmpty(AccessPlayer.GetPartiesInOpposition),IsDataModelEmpty(AccessPlayer.GetIndependentInterestGroupsInOpposition))]"
-				text = "NO_CANDIDATES"
-				using = fontsize_xl
-				align = center|nobaseline
-				size = { 0 100 }
-				alpha = 0.5
-			}
-
-			vbox = {
-				layoutpolicy_horizontal = expanding
-				# spacing = 10
-				# margin = { 20 10 }
-				visible = "[Not(IsDataModelEmpty(PoliticsPanel.GetAgitatorSlots))]"
-				datamodel = "[AccessPlayer.AccessInterestGroupsInGovernment]"
-				addcolumn = 120
-				addrow = 120
-
-
-				item = {
-					hbox = {
-						layoutpolicy_horizontal = expanding
-						# layoutpolicy_vertical = preferred
-						margin = { 10 10 }
-						spacing = 5
-				
-						using = entry_bg_fancy_solid_bg
-						datacontext = "[Character.GetInterestGroup]"
-				
-						background = {
-							using = fade_right_entry_fancy_header_colored
-							color = "[InterestGroup.GetColor]"
-						}
-						datacontext = "[InterestGroup.GetLeader]"
-						
-
-						character_portrait_large = {
-							visible = "[Character.IsValid]"
-							parentanchor = left
-							using = tooltip_below
-							
-							blockoverride "show_hat" {}
-							blockoverride "highlight" {}
-							
-							### IG ICON
-							character_ig_button = {
-								parentanchor = bottom|left
-								size = { 38 38 }
-								position = { 2 0 }
-								blockoverride "in_government_icon" {}
-							}
-							
-							### IDEOLOGY
-							icon = {
-								parentanchor = bottom|right
-								size = { 38 38 }
-								position = { -2 0 }
-								datacontext = "[Character.GetIdeology]"
-								texture = "[Ideology.GetTexture]"
-								tooltipwidget = {
-									FancyTooltip_Ideology = {}
-								}
-							}
-
-						}
-						vbox = {
-							textbox = {
-								layoutpolicy_horizontal = expanding
-								align = left
-								autoresize = yes
-								text = "[Character.GetFullName]"
-							}
-
-							textbox = {
-								layoutpolicy_horizontal = expanding
-								align = left
-								autoresize = yes
-								text = "CHARACTER_POPULARITY_LABEL"
-							}
-
-							dynamicgridbox = {
-								datamodel = "[Character.AccessTraits]"
-								datamodel_wrap = 2
-								flipdirection = yes
-				
-								item = {
-									character_trait_with_label = {}
-								}
-							}
-
-						}
-						expand = {}
-
-						vbox = {
-							layoutpolicy_vertical = preferred
-							layoutpolicy_horizontal = expanding
-							
-							hbox = {
-								layoutpolicy_horizontal = preferred
-								datacontext = "[Character.GetInterestGroup]"
-								datacontext = "[InterestGroup.GetParty]"
-
-								textbox = {
-									autoresize = yes
-									text = "[Party.GetName]"
-								}
-
-								icon = {
-									visible = "[Character.IsValid]"
-									size = { 60 60 }
-									texture = "[Party.GetIcon]"
-								}
-							}
-
-							button = {
-								using = default_button_primary_action
-								size = { 150 40 }
-								text = "ASSIGN"
-							}
-						}
-
-					}
-						# exiled_agitator = {
-						# visible = "[Or( And( GetVariableSystem.Exists('politics_overview_exile_pool_show_available'), Character.GetInteraction('invite_exile').IsCommandValid(Character.Self)),  And(Not(GetVariableSystem.Exists('politics_overview_exile_pool_show_available')), Or(Not(Character.GetInteraction('invite_exile').IsCommandValid(Character.Self)), Character.GetInteraction('invite_exile').IsCommandValid(Character.Self)) ) )]"
-					# }
-				}
-			}
-
-			widget = {
-				layoutpolicy_horizontal = preferred
-				layoutpolicy_vertical = expanding
+		cabinet_assignment_window = {
+			blockoverride "text" {
+				text = "ASSIGN_HEAD_OF_GOVERNMENT"
 			}
 		}
 	}
@@ -1370,6 +1180,16 @@ types politics_panel_types
 			item = {
 				hbox = {
 					layoutpolicy_horizontal = expanding
+					
+					institution_icon = {
+						size = { 70 70 }
+						
+						using = tooltip_es
+						tooltipwidget = {
+							FancyTooltip_Institution = {}
+						}
+					}
+
 					textbox = {
 						size = { 0 30 }
 						text = "Ministry of [Institution.GetNameNoFormatting]"
@@ -1377,11 +1197,219 @@ types politics_panel_types
 						layoutpolicy_horizontal = expanding
 						using = fontsize_large
 					}
+
 					add_character_button = {
 						size = { 60 60 }
 					}
+
+					button = {
+						using = default_button_action
+						size = { 150 40 }
+						text = "DISMISS"
+					}
+
 				}
 			}
 		}	
+	}
+
+	type cabinet_assignment_window = vbox {
+			layoutpolicy_vertical = expanding
+			layoutpolicy_horizontal = expanding
+			margin_right = 5
+			margin_left = 10
+			layoutstretchfactor_horizontal = 2
+			visible = "[GetVariableSystem.Exists('politics_assign_cabinet')]"
+			datacontext = "[GetPlayer]"
+			using = default_fade_in_out
+			
+			background = {
+				using = dark_area
+				
+				modify_texture = {
+					texture = "gfx/interface/masks/fade_vertical_center.dds"
+					spriteType = Corneredstretched
+					spriteborder = { 0 0 }
+					blend_mode = alphamultiply
+				}
+				modify_texture = {
+					texture = "gfx/interface/masks/fade_horizontal_less_right.dds"
+					spriteType = Corneredstretched
+					spriteborder = { 0 0 }
+					blend_mode = alphamultiply
+				}
+			}
+			
+			### HEADER
+			hbox = {
+				name = "tutorial_highlight_opposition_title"		
+				spacing = 5
+				margin = { 5 8 }
+				layoutpolicy_horizontal = preferred
+				tooltip = IN_OPPOSITION_DESC
+
+				background = {
+					using = default_header_bg_faded
+				}
+				
+				widget = {
+					layoutpolicy_horizontal = expanding
+					size = { 0 30 }
+				}
+				
+				hbox = {
+					layoutpolicy_horizontal = preferred
+					layoutpolicy_vertical = preferred
+					tooltip = IN_OPPOSITION_DESC
+					spacing = 10
+				
+					textbox = {
+						autoresize = yes
+						block "text" {
+							text = "ASSIGN_MINISTER"
+						} 
+						align = right|nobaseline
+						elide = right
+						default_format = "#title"
+						using = fontsize_large
+					}
+
+					icon = {
+						texture = "gfx/interface/icons/generic_icons/in_opposition_icon.dds"
+						size = { 30 30 }
+					}
+				}
+			}
+
+			### CANDIDATES
+			vbox = {
+				layoutpolicy_horizontal = expanding
+				datamodel = "[AccessPlayer.AccessInterestGroupsInGovernment]"
+				addcolumn = 120
+				addrow = 120
+
+				cabinet_candidate = {
+					blockoverride "datacontext" {
+						datacontext = "[AccessPlayer.GetRuler]"
+					}
+				}
+
+				cabinet_candidate = {
+					blockoverride "datacontext" {
+						datacontext = "[AccessPlayer.GetHeir]"
+					}
+				}
+
+				item = {
+					cabinet_candidate = {}
+				}
+			}
+
+			widget = {
+				layoutpolicy_horizontal = preferred
+				layoutpolicy_vertical = expanding
+			}
+		}
+
+	type cabinet_candidate = hbox {
+		layoutpolicy_horizontal = expanding
+		block "datacontext"{
+			datacontext = "[InterestGroup.GetLeader]"
+		}
+		
+		margin = { 10 10 }
+		spacing = 5
+		using = entry_bg_fancy_solid_bg
+
+		background = {
+			using = fade_right_entry_fancy_header_colored
+			color = "[Character.AccessInterestGroup.GetColor]"
+		}
+		
+		character_portrait_large = {
+			visible = "[Character.IsValid]"
+			parentanchor = left
+			using = tooltip_below
+			
+			blockoverride "show_hat" {}
+			blockoverride "highlight" {}
+			
+			### IG ICON
+			character_ig_button = {
+				parentanchor = bottom|left
+				size = { 38 38 }
+				position = { 2 0 }
+				blockoverride "in_government_icon" {}
+			}
+			
+			### IDEOLOGY
+			icon = {
+				parentanchor = bottom|right
+				size = { 38 38 }
+				position = { -2 0 }
+				datacontext = "[Character.GetIdeology]"
+				texture = "[Ideology.GetTexture]"
+				tooltipwidget = {
+					FancyTooltip_Ideology = {}
+				}
+			}
+
+		}
+
+		vbox = {
+			textbox = {
+				layoutpolicy_horizontal = expanding
+				align = left
+				autoresize = yes
+				text = "[Character.GetFullName]"
+			}
+
+			textbox = {
+				layoutpolicy_horizontal = expanding
+				align = left
+				autoresize = yes
+				text = "CHARACTER_POPULARITY_LABEL"
+			}
+
+			dynamicgridbox = {
+				datamodel = "[Character.AccessTraits]"
+				datamodel_wrap = 2
+				flipdirection = yes
+
+				item = {
+					character_trait_with_label = {}
+				}
+			}
+
+		}
+		expand = {}
+
+		vbox = {
+			layoutpolicy_vertical = preferred
+			layoutpolicy_horizontal = expanding
+			
+			hbox = {
+				layoutpolicy_horizontal = preferred
+				datacontext = "[Character.GetInterestGroup]"
+				datacontext = "[InterestGroup.GetParty]"
+
+				textbox = {
+					autoresize = yes
+					text = "[Party.GetName]"
+				}
+
+				icon = {
+					visible = "[Character.IsValid]"
+					size = { 60 60 }
+					texture = "[Party.GetIcon]"
+				}
+			}
+
+			button = {
+				using = default_button_primary_action
+				size = { 150 40 }
+				text = "ASSIGN"
+			}
+		}
 	}
 }
