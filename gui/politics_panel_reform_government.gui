@@ -1175,7 +1175,7 @@ types politics_panel_types
 			layoutpolicy_vertical = preferred
 			visible = "[GetVariableSystem.Exists('cabinet_positions_expanded')]"
 			datamodel = "[AccessPlayer.AccessInstitutions]"
-			spacing = 15
+			spacing = 5
 
 			item = {
 				hbox = {
@@ -1191,10 +1191,10 @@ types politics_panel_types
 					}
 
 					textbox = {
+						layoutpolicy_horizontal = expanding
 						size = { 0 30 }
 						text = "Ministry of [Institution.GetNameNoFormatting]"
 						using = fontsize_large
-						layoutpolicy_horizontal = expanding
 						using = fontsize_large
 					}
 
@@ -1207,115 +1207,108 @@ types politics_panel_types
 						size = { 150 40 }
 						text = "DISMISS"
 					}
-
 				}
 			}
 		}	
 	}
 
 	type cabinet_assignment_window = vbox {
-			layoutpolicy_vertical = expanding
-			layoutpolicy_horizontal = expanding
-			margin_right = 5
-			margin_left = 10
-			layoutstretchfactor_horizontal = 2
-			visible = "[GetVariableSystem.Exists('politics_assign_cabinet')]"
-			datacontext = "[GetPlayer]"
-			using = default_fade_in_out
+		layoutpolicy_vertical = expanding
+		layoutpolicy_horizontal = expanding
+		margin_right = 5
+		margin_left = 10
+		layoutstretchfactor_horizontal = 2
+		visible = "[GetVariableSystem.Exists('politics_assign_cabinet')]"
+		datacontext = "[GetPlayer]"
+		using = default_fade_in_out
+		
+		background = {
+			using = dark_area
 			
-			background = {
-				using = dark_area
-				
-				modify_texture = {
-					texture = "gfx/interface/masks/fade_vertical_center.dds"
-					spriteType = Corneredstretched
-					spriteborder = { 0 0 }
-					blend_mode = alphamultiply
-				}
-				modify_texture = {
-					texture = "gfx/interface/masks/fade_horizontal_less_right.dds"
-					spriteType = Corneredstretched
-					spriteborder = { 0 0 }
-					blend_mode = alphamultiply
-				}
+			modify_texture = {
+				texture = "gfx/interface/masks/fade_vertical_center.dds"
+				spriteType = Corneredstretched
+				spriteborder = { 0 0 }
+				blend_mode = alphamultiply
 			}
-			
-			### HEADER
-			hbox = {
-				name = "tutorial_highlight_opposition_title"		
-				spacing = 5
-				margin = { 5 8 }
-				layoutpolicy_horizontal = preferred
-				tooltip = IN_OPPOSITION_DESC
-
-				background = {
-					using = default_header_bg_faded
-				}
-				
-				widget = {
-					layoutpolicy_horizontal = expanding
-					size = { 0 30 }
-				}
-				
-				hbox = {
-					layoutpolicy_horizontal = preferred
-					layoutpolicy_vertical = preferred
-					tooltip = IN_OPPOSITION_DESC
-					spacing = 10
-				
-					textbox = {
-						autoresize = yes
-						block "text" {
-							text = "ASSIGN_MINISTER"
-						} 
-						align = right|nobaseline
-						elide = right
-						default_format = "#title"
-						using = fontsize_large
-					}
-
-					icon = {
-						texture = "gfx/interface/icons/generic_icons/in_opposition_icon.dds"
-						size = { 30 30 }
-					}
-				}
-			}
-
-			### CANDIDATES
-			vbox = {
-				layoutpolicy_horizontal = expanding
-				datamodel = "[AccessPlayer.AccessInterestGroupsInGovernment]"
-				addcolumn = 120
-				addrow = 120
-
-				cabinet_candidate = {
-					blockoverride "datacontext" {
-						datacontext = "[AccessPlayer.GetRuler]"
-					}
-				}
-
-				cabinet_candidate = {
-					blockoverride "datacontext" {
-						datacontext = "[AccessPlayer.GetHeir]"
-					}
-				}
-
-				item = {
-					cabinet_candidate = {}
-				}
-			}
-
-			widget = {
-				layoutpolicy_horizontal = preferred
-				layoutpolicy_vertical = expanding
+			modify_texture = {
+				texture = "gfx/interface/masks/fade_horizontal_less_right.dds"
+				spriteType = Corneredstretched
+				spriteborder = { 0 0 }
+				blend_mode = alphamultiply
 			}
 		}
+		
+		### HEADER
+		hbox = {
+			name = "tutorial_highlight_opposition_title"		
+			spacing = 5
+			margin = { 5 8 }
+			layoutpolicy_horizontal = preferred
+			tooltip = IN_OPPOSITION_DESC
+			background = {
+				using = default_header_bg_faded
+			}
+			
+			widget = {
+				layoutpolicy_horizontal = expanding
+				size = { 0 30 }
+			}
+			
+			hbox = {
+				layoutpolicy_horizontal = preferred
+				layoutpolicy_vertical = preferred
+				tooltip = IN_OPPOSITION_DESC
+				spacing = 10
+			
+				textbox = {
+					autoresize = yes
+					block "text" {
+						text = "ASSIGN_MINISTER"
+					} 
+					align = right|nobaseline
+					elide = right
+					default_format = "#title"
+					using = fontsize_large
+				}
+				icon = {
+					texture = "gfx/interface/icons/generic_icons/in_opposition_icon.dds"
+					size = { 30 30 }
+				}
+			}
+		}
+		### CANDIDATES
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			datamodel = "[AccessPlayer.AccessInterestGroupsInGovernment]"
+			addcolumn = 120
+			addrow = 120
+			cabinet_candidate = {
+				blockoverride "datacontext" {
+					datacontext = "[AccessPlayer.GetRuler]"
+				}
+			}
+			cabinet_candidate = {
+				blockoverride "datacontext" {
+					datacontext = "[AccessPlayer.GetHeir]"
+				}
+			}
+			item = {
+				cabinet_candidate = {}
+			}
+		}
+		widget = {
+			layoutpolicy_horizontal = preferred
+			layoutpolicy_vertical = expanding
+		}
+	}
 
 	type cabinet_candidate = hbox {
 		layoutpolicy_horizontal = expanding
 		block "datacontext"{
 			datacontext = "[InterestGroup.GetLeader]"
 		}
+		visible = "[Character.IsValid]"
 		
 		margin = { 10 10 }
 		spacing = 5
@@ -1327,7 +1320,6 @@ types politics_panel_types
 		}
 		
 		character_portrait_large = {
-			visible = "[Character.IsValid]"
 			parentanchor = left
 			using = tooltip_below
 			
@@ -1355,7 +1347,8 @@ types politics_panel_types
 			}
 
 		}
-
+		
+		### CHARACTER DETAILS
 		vbox = {
 			textbox = {
 				layoutpolicy_horizontal = expanding
@@ -1380,8 +1373,8 @@ types politics_panel_types
 					character_trait_with_label = {}
 				}
 			}
-
 		}
+
 		expand = {}
 
 		vbox = {
@@ -1392,6 +1385,10 @@ types politics_panel_types
 				layoutpolicy_horizontal = preferred
 				datacontext = "[Character.GetInterestGroup]"
 				datacontext = "[InterestGroup.GetParty]"
+				visible = "[Character.IsIGLeader]"
+				spacing = 10
+
+				expand = {}
 
 				textbox = {
 					autoresize = yes
@@ -1405,10 +1402,17 @@ types politics_panel_types
 				}
 			}
 
-			button = {
-				using = default_button_primary_action
-				size = { 150 40 }
-				text = "ASSIGN"
+			hbox = {
+				layoutpolicy_horizontal = expanding
+
+				expand = {}
+
+				button = {
+					using = default_button_primary_action
+					# parentanchor = right
+					size = { 150 40 }
+					text = "ASSIGN"
+				}
 			}
 		}
 	}
