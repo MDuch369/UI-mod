@@ -1,0 +1,27 @@
+﻿calculate_seats = {
+	scope = country
+	 
+	is_valid = {
+		always = yes
+	}
+
+	 effect = {
+
+		root = {
+			set_variable = "button_succesfully_pressed"
+		}
+
+		every_interest_group = {
+			limit = {
+				is_marginal = no
+			}
+			
+			root = {
+				add_to_variable_list = {
+					name = "factions"
+					target = prev
+				}
+			}
+		}
+	}
+}

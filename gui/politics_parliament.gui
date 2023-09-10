@@ -32,7 +32,16 @@ types politics_panel_types
             vbox = {
                 layoutpolicy_horizontal = expanding
                 layoutpolicy_vertical = expanding
-                
+
+                button = {
+                    size = { 200 40 }
+                    # autoresize = yes
+                    raw_text = "REFRESH CHART"
+                    using = default_button_primary_action
+                    datacontext = "[GetScriptedGui('calculate_seats')]"
+                    onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( AccessPlayer.MakeScope ).End)]"
+                }
+
                 ### HOUSE CHART
                 widget = {
                     minimumsize = { 100% 100% }
@@ -49,14 +58,23 @@ types politics_panel_types
                         size = { 65% 76% }
                         parentanchor = center
                         position = { 0 -1 }
-                        datamodel = "[GetLoyaltyTypes]"
+                        datamodel = "[AccessPlayer.MakeScope.GetList('factions')]"
+                        mirror = vertical
+                        
+                        pieslice = {
+                            name = "filler"
+                            value = "[Add_CFixedPoint(AccessPlayer.GetTotalGovernmentClout,AccessPlayer.GetTotalOppositionClout)]"
+                            color = { 1.0 1.0 1.0 1.0 }
+                        }
+                       
                         item = {
                             pieslice = {
                                 using = loyalty_slice_tooltip_with_graph
-                                value = "[LoyaltyType.GetCountryGraphicalRatio(Country.Self)]"
-                                color = "[LoyaltyType.GetColor]"
+                                value = "[Scope.GetInterestGroup.GetCloutAsFloat)]"
+                                color = "[Scope.GetInterestGroup.GetColor]"
                             }
                         }
+                        
                     }
 
                     icon = {
@@ -65,7 +83,7 @@ types politics_panel_types
                         parentanchor = center
                     }
                     
-                    ### AGENDA BOX
+                    ## AGENDA BOX
                     vbox = {
                         layoutpolicy_horizontal = expanding
                         position = { 0 48% }
@@ -83,7 +101,7 @@ types politics_panel_types
                             }
                         }
 
-                        ### ACTIVITY
+                        # ACTIVITY
                         hbox = {
                             margin = { 10 0 }
                             layoutpolicy_horizontal = expanding
