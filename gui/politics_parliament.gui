@@ -136,7 +136,7 @@ types politics_panel_types
                         }
                         textbox = {
                             layoutpolicy_horizontal = expanding
-                            text = "INCREASING_OWN_WAGES"
+                            text = "FILIBUSTERING"
                             autoresize = yes
                             using = fontsize_large
                         }
@@ -245,65 +245,163 @@ types politics_panel_types
                 margin = { 10 10 }
                 layoutpolicy_vertical = expanding
                 layoutpolicy_horizontal = expanding
+                datamodel = "[AccessPlayer]"
                 textbox = {
                     minimumsize = { 500 50 }
                     layoutpolicy_horizontal = expanding
                     autoresize = yes
                     align = hcenter
-                    text = "FACTIONS"
+                    text = "MEMBERS"
                     using = fontsize_large
                     background = {
                         using = default_header_bg_faded
                     }
                 }
+                
+                ## GOVERNMENT
+                vbox = {
+                    # layoutpolicy_vertical = expanding
+                    layoutpolicy_horizontal = expanding
+                    datamodel = "[AccessPlayer.GetPartiesInGovernment]"
+                    
+                    hbox = {
+                        layoutpolicy_horizontal = expanding
+                        
+                        icon = {
+                            texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
+                            size = { 50 50 }
+                        }
+                        
+                        textbox = {
+                            layoutpolicy_horizontal = expanding
+                            text = "GUVMENT"
+                            using = font_size_large
+                            # background = {
+                                # using = default_header_bg_faded
+                            # }
+                            
+                        }
 
-                hbox = {
-                    layoutpolicy_horizontal = expanding
-                    textbox = {
-                        text = "OLD_FARTS_PARTY"
-                        autoresize = yes
+                        # divider_decorative = {}
                     }
-                    expand = {}
+
+                    # PARTIES
+                    item = {
+                        vbox = {
+                            layoutpolicy_horizontal = expanding
+                            margin = { 20 0 }
+                            
+                            hbox = {
+                                color = "[Party.GetColor]"
+                                layoutpolicy_horizontal = expanding
+                                
+                                icon = {
+                                    texture = "[Party.GetIcon]"
+                                    size = { 40 40 }
+                                }
+
+                                textbox = {
+                                    layoutpolicy_horizontal = expanding
+                                    minimumsize = { 500 50 }
+                                    text = "[Party.GetName]"
+                                    using = font_size_large
+                                    # background = {
+                                        # using = default_header_bg_faded
+                                        # }  
+                                }
+                                background = {}
+                            }  
+                            
+                            # PARTY MEMBERS
+                            vbox = {
+                                layoutpolicy_vertical = expanding
+                                layoutpolicy_horizontal = expanding
+                                datamodel = "[Party.GetMembers]"
+                                # margin = { 10 0 }
+                                spacing = 5
+
+                                item = {
+                                    vbox = {
+                                        layoutpolicy_horizontal = expanding
+                                        # margin = { 20 0 }
+                                        # spacing = 5
+
+                                        hbox = {
+                                            layoutpolicy_vertical = expanding
+                                            layoutpolicy_horizontal = expanding
+                                            # spacing = 10
+                                            
+                                            icon = {
+                                                size = { 40 40 }
+                                                texture = "[InterestGroup.GetIcon]"
+                                            }
+                                            
+                                            textbox = {
+                                                autoresize = yes
+                                                # minimumsize = { 0 40 }
+                                                # layoutpolicy_horizontal = prefered
+                                                text = "[InterestGroup.GetName]"
+                                                # using = font_size_large
+                                            }
+
+                                            expand = {}    
+
+                                            textbox = {
+                                                autoresize = yes
+                                                text = "[Multiply_CFixedPoint(InterestGroup.GetClout,'(CFixedPoint)100')|2]%"
+                                            }
+
+                                        }
+
+                                        divider_clean = {
+                                            
+                                            layoutpolicy_horizontal = expanding
+                                        }
+                                    }
+                                }
+
+                                divider_decorative = {
+                                    layoutpolicy_horizontal = expanding
+                                }
+                            }
+                        }
+                    }
                 }
-                hbox = {
+
+                ## OPPOSITION
+                vbox = {
+                    layoutpolicy_vertical = expanding
                     layoutpolicy_horizontal = expanding
-                    textbox = {
-                        text = "SOMEHOW_EVEN_OLDER_FARTS_PARTY"
-                        autoresize = yes
-                    }
-                    expand = {}
-                }
-                hbox = {
+                    datamodel = "[AccessPlayer.GetPartiesInOpposition]"
                     layoutpolicy_horizontal = expanding
+                    autoexpanding = yes
                     textbox = {
-                        text = "JUDEAN_PEOPLES_FRONT"
-                        autoresize = yes
+                        text = "OPPOSTN"
+                        using = font_size_large
+                        background = {
+                            using = default_header_bg_faded
+                        }
                     }
-                    expand = {}
-                }
-                hbox = {
-                    layoutpolicy_horizontal = expanding
-                    textbox = {
-                        text = "PEOPLES_FRONT_OF_JUDEA"
-                        autoresize = yes
+
+                    item = {
+                        vbox = {
+                            layoutpolicy_vertical = expanding
+                            layoutpolicy_horizontal = expanding
+                            datamodel = "[Party.GetMembers]"
+
+                            item = {
+                                hbox = {
+                                    layoutpolicy_vertical = expanding
+                                    layoutpolicy_horizontal = expanding
+
+                                    textbox = {
+                                        layoutpolicy_horizontal = expanding
+                                        text = "[InterestGroup.GetName]"
+                                    }
+                                }
+                            }
+                        }
                     }
-                    expand = {}
-                }
-                hbox = {
-                    layoutpolicy_horizontal = expanding
-                    textbox = {
-                        text = "POPULAR_JUDEAN_FRONT"
-                        autoresize = yes
-                    }
-                    expand = {}
-                }
-                hbox = {
-                    layoutpolicy_horizontal = expanding
-                    textbox = {
-                        text = "THEESE_GUYS"
-                        autoresize = yes
-                    }
-                    expand = {}
                 }
                 expand = {}
             }
