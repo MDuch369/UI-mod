@@ -69,7 +69,7 @@ types politics_panel_types
                        
                         item = {
                             pieslice = {
-                                using = loyalty_slice_tooltip_with_graph
+                                # using = loyalty_slice_tooltip_with_graph
                                 value = "[Scope.GetInterestGroup.GetCloutAsFloat)]"
                                 color = "[Scope.GetInterestGroup.GetColor]"
                             }
@@ -83,93 +83,277 @@ types politics_panel_types
                         parentanchor = center
                     }
                     
-                    ## AGENDA BOX
+                    ### MEMBERS
                     vbox = {
-                        layoutpolicy_horizontal = expanding
                         position = { 0 48% }
-                        spacing = 10
-                        margin = { 20 0 }
-
+                        # maximumsize = { 2000 350 }
+                        layoutpolicy_horizontal = expanding
+                        background = {
+                            using = default_background
+                        }
+                        
                         textbox = {
-                            size = { 100% 50 }
+                            minimumsize = { 500 50 }
                             layoutpolicy_horizontal = expanding
-                            text = "AGENDA"
+                            autoresize = yes
                             align = hcenter
+                            text = "MEMBERS"
                             using = fontsize_large
                             background = {
                                 using = default_header_bg_faded
                             }
                         }
 
-                        # ACTIVITY
                         hbox = {
-                            margin = { 10 0 }
                             layoutpolicy_horizontal = expanding
+                            layoutpolicy_vertical = expanding
+                        
+                            ## GOVERNMENT
+                            vbox = {
+                                layoutpolicy_vertical = expanding
+                                layoutpolicy_horizontal = expanding
+                                datamodel = "[AccessPlayer.GetPartiesInGovernment]"
+                                margin = { 10 0 }
+                                
+                                hbox = {
+                                    layoutpolicy_horizontal = expanding
+                                    
+                                    icon = {
+                                        texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
+                                        size = { 50 50 }
+                                    }
+                                    
+                                    textbox = {
+                                        layoutpolicy_horizontal = expanding
+                                        text = "GUVMENT"
+                                        autoresize = yes
+                                        using = font_size_large
+                                        
+                                    }
+                                
+                                }
                             
-                            textbox = {
-                                layoutpolicy_horizontal = fixed
-                                min_width = 150 
-                                text = "CURRENT_ACTIVITY"
-                                autoresize = yes
-                                using = fontsize_large
+                                # PARTIES
+                                item = {
+                                    vbox = {
+                                        layoutpolicy_horizontal = expanding
+
+                                        background = {
+                                            using = simple_frame
+                                        }
+                                        
+                                        # header
+                                        hbox = {
+                                            layoutpolicy_horizontal = expanding
+                                            
+                                            icon = {
+                                                texture = "[Party.GetIcon]"
+                                                size = { 40 40 }
+                                            }
+                                        
+                                            textbox = {
+                                                layoutpolicy_horizontal = expanding
+                                                minimumsize = { 0 50 }
+                                                text = "[Party.GetName]"
+                                                using = font_size_large
+                                                color = "[Party.GetColor]"
+                                                  
+                                            }
+
+                                            background = {
+                                                texture = "gfx/interface/tooltip/tooltip_title_bg.dds"
+                                                color = "[Party.GetColor]"
+                                                alpha = 0.5
+                                                
+                                                modify_texture = {
+                                                    using = texture_velvet
+                                                }
+                                            }
+                                        }  
+                                        
+                                        # members
+                                        vbox = {
+                                            layoutpolicy_horizontal = expanding
+                                            datamodel = "[Party.GetMembers]"
+                                            spacing = 5
+                                        
+                                            item = {
+                                                vbox = {
+                                                    layoutpolicy_horizontal = expanding
+
+                                                    background = {
+                                                        texture = "gfx/interface/tooltip/tooltip_title_bg.dds"
+                                                        color = "[InterestGroup.GetColor]"
+                                                        alpha = 0.2
+                                            
+                                                        modify_texture = {
+                                                            using = texture_velvet
+                                                        }
+                                                    }
+                                                
+                                                    hbox = {
+                                                        layoutpolicy_horizontal = expanding
+                                                        icon = {
+                                                            size = { 40 40 }
+                                                            texture = "[InterestGroup.GetIcon]"
+                                                        }
+                                                        textbox = {
+                                                            autoresize = yes
+                                                            text = "[InterestGroup.GetName]"
+                                                        }
+                                                    
+                                                        expand = {}    
+                                                    
+                                                        textbox = {
+                                                            autoresize = yes
+                                                            text = "[Multiply_CFixedPoint(InterestGroup.GetClout,'(CFixedPoint)100')|2]%"
+                                                        }
+                                                    
+                                                    }
+                                                
+                                                    divider_clean = {
+                                                        layoutpolicy_horizontal = expanding
+                                                    }
+                                                }
+                                            }
+                                        
+                                            divider_decorative = {
+                                                layoutpolicy_horizontal = expanding
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                            expand = {}
+
+                            vertical_divider_stronger_full = {}
+                        
+                            ## OPPOSITION
+                            vbox = {
+                                layoutpolicy_vertical = growing
+                                layoutpolicy_horizontal = expanding
+                                datamodel = "[AccessPlayer.GetPartiesInOpposition]"
+                                margin = { 10 0 }
+                                
+                                hbox = {
+                                    layoutpolicy_horizontal = expanding
+                                    
+                                    icon = {
+                                        texture = "gfx/interface/icons/generic_icons/in_opposition_icon.dds"
+                                        size = { 50 50 }
+                                    }
+                                    
+                                    textbox = {
+                                        layoutpolicy_horizontal = expanding
+                                        text = "OPPOSTN"
+                                        autoresize = yes
+                                        using = font_size_large
+                                        
+                                    }
+                                
+                                }
                             
-                            textbox = {
-                                layoutpolicy_horizontal = fixed
-                                text = "IN_RECESS"
-                                autoresize = yes
-                                using = fontsize_large
+                                # PARTIES
+                                item = {
+                                    vbox = {
+                                        layoutpolicy_horizontal = expanding
+                                        layoutpolicy_vertical = expanding
+
+                                        background = {
+                                            using = simple_frame
+                                        }
+                                        
+                                        # header
+                                        hbox = {
+                                            layoutpolicy_horizontal = expanding
+                                            
+                                            icon = {
+                                                texture = "[Party.GetIcon]"
+                                                size = { 40 40 }
+                                            }
+                                        
+                                            textbox = {
+                                                layoutpolicy_horizontal = expanding
+                                                minimumsize = { 0 50 }
+                                                text = "[Party.GetName]"
+                                                using = font_size_large
+                                                color = "[Party.GetColor]"
+                                                  
+                                            }
+
+                                            background = {
+                                                texture = "gfx/interface/tooltip/tooltip_title_bg.dds"
+                                                color = "[Party.GetColor]"
+                                                alpha = 0.5
+                                                
+                                                modify_texture = {
+                                                    using = texture_velvet
+                                                }
+                                            }
+                                        }  
+                                        
+                                        # members
+                                        vbox = {
+                                            layoutpolicy_horizontal = expanding
+                                            datamodel = "[Party.GetMembers]"
+                                            spacing = 5
+                                        
+                                            item = {
+                                                vbox = {
+                                                    layoutpolicy_horizontal = expanding
+
+                                                    background = {
+                                                        texture = "gfx/interface/tooltip/tooltip_title_bg.dds"
+                                                        color = "[InterestGroup.GetColor]"
+                                                        alpha = 0.2
+                                            
+                                                        modify_texture = {
+                                                            using = texture_velvet
+                                                        }
+                                                    }
+                                                
+                                                    hbox = {
+                                                        # layoutpolicy_vertical = expanding
+                                                        layoutpolicy_horizontal = expanding
+                                                        # spacing = 10
+                                                        icon = {
+                                                            size = { 40 40 }
+                                                            texture = "[InterestGroup.GetIcon]"
+                                                        }
+                                                        textbox = {
+                                                            autoresize = yes
+                                                            # minimumsize = { 0 40 }
+                                                            # layoutpolicy_horizontal = prefered
+                                                            text = "[InterestGroup.GetName]"
+                                                            # using = font_size_large
+                                                        }
+                                                    
+                                                        expand = {}    
+                                                    
+                                                        textbox = {
+                                                            autoresize = yes
+                                                            text = "[Multiply_CFixedPoint(InterestGroup.GetClout,'(CFixedPoint)100')|2]%"
+                                                        }
+                                                    
+                                                    }
+                                                
+                                                    divider_clean = {
+                                                        layoutpolicy_horizontal = expanding
+                                                    }
+                                                }
+                                            }
+                                        
+                                            divider_decorative = {
+                                                layoutpolicy_horizontal = expanding
+                                            }
+                                        }
+                                        expand = {}
+                                    }
+                                }
                             }
-                        }
-                        divider_decorative = {
-                            layoutpolicy_horizontal = expanding
-                        }
-                        textbox = {
-                            layoutpolicy_horizontal = expanding
-                            text = "NAPPING"
-                            autoresize = yes
-                            using = fontsize_large
-                        }
-                        divider_decorative = {
-                            layoutpolicy_horizontal = expanding
-                        }
-                        textbox = {
-                            layoutpolicy_horizontal = expanding
-                            text = "FILIBUSTERING"
-                            autoresize = yes
-                            using = fontsize_large
-                        }
-                        divider_decorative = {
-                            layoutpolicy_horizontal = expanding
-                        }
-                        textbox = {
-                            layoutpolicy_horizontal = expanding
-                            text = "IGNORING_URGENT_ISSUES"
-                            autoresize = yes
-                            using = fontsize_large
-                        }
-                        divider_decorative = {
-                            layoutpolicy_horizontal = expanding
-                        }
-                        textbox = {
-                            layoutpolicy_horizontal = expanding
-                            text = "PRETENDING_TO_BE_IMPORTANT"
-                            autoresize = yes
-                            using = fontsize_large
-                        }
-                        divider_decorative = {
-                            layoutpolicy_horizontal = expanding
-                        }
-                        expand = {}
-                        background = {
-                            using = default_background
                         }
                     }
                 }
-                
             }
-            # expand = {}
         }
 
         vertical_divider_stronger_full = {}
@@ -239,172 +423,81 @@ types politics_panel_types
                 }
             }
 
-            ### PARTIES
-            vbox = {
-                spacing = 10
-                margin = { 10 10 }
-                layoutpolicy_vertical = expanding
+            ### ACTIVITY
+            textbox = {
+                size = { 100% 50 }
                 layoutpolicy_horizontal = expanding
-                datamodel = "[AccessPlayer]"
-                textbox = {
-                    minimumsize = { 500 50 }
-                    layoutpolicy_horizontal = expanding
-                    autoresize = yes
-                    align = hcenter
-                    text = "MEMBERS"
-                    using = fontsize_large
-                    background = {
-                        using = default_header_bg_faded
-                    }
+                text = "AGENDA"
+                align = hcenter
+                using = fontsize_large
+                background = {
+                    using = default_header_bg_faded
                 }
+            }
+            
+            hbox = {
+                margin = { 10 0 }
+                layoutpolicy_horizontal = expanding
                 
-                ## GOVERNMENT
-                vbox = {
-                    # layoutpolicy_vertical = expanding
-                    layoutpolicy_horizontal = expanding
-                    datamodel = "[AccessPlayer.GetPartiesInGovernment]"
-                    
-                    hbox = {
-                        layoutpolicy_horizontal = expanding
-                        
-                        icon = {
-                            texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-                            size = { 50 50 }
-                        }
-                        
-                        textbox = {
-                            layoutpolicy_horizontal = expanding
-                            text = "GUVMENT"
-                            using = font_size_large
-                            # background = {
-                                # using = default_header_bg_faded
-                            # }
-                            
-                        }
-
-                        # divider_decorative = {}
-                    }
-
-                    # PARTIES
-                    item = {
-                        vbox = {
-                            layoutpolicy_horizontal = expanding
-                            margin = { 20 0 }
-                            
-                            hbox = {
-                                color = "[Party.GetColor]"
-                                layoutpolicy_horizontal = expanding
-                                
-                                icon = {
-                                    texture = "[Party.GetIcon]"
-                                    size = { 40 40 }
-                                }
-
-                                textbox = {
-                                    layoutpolicy_horizontal = expanding
-                                    minimumsize = { 500 50 }
-                                    text = "[Party.GetName]"
-                                    using = font_size_large
-                                    # background = {
-                                        # using = default_header_bg_faded
-                                        # }  
-                                }
-                                background = {}
-                            }  
-                            
-                            # PARTY MEMBERS
-                            vbox = {
-                                layoutpolicy_vertical = expanding
-                                layoutpolicy_horizontal = expanding
-                                datamodel = "[Party.GetMembers]"
-                                # margin = { 10 0 }
-                                spacing = 5
-
-                                item = {
-                                    vbox = {
-                                        layoutpolicy_horizontal = expanding
-                                        # margin = { 20 0 }
-                                        # spacing = 5
-
-                                        hbox = {
-                                            layoutpolicy_vertical = expanding
-                                            layoutpolicy_horizontal = expanding
-                                            # spacing = 10
-                                            
-                                            icon = {
-                                                size = { 40 40 }
-                                                texture = "[InterestGroup.GetIcon]"
-                                            }
-                                            
-                                            textbox = {
-                                                autoresize = yes
-                                                # minimumsize = { 0 40 }
-                                                # layoutpolicy_horizontal = prefered
-                                                text = "[InterestGroup.GetName]"
-                                                # using = font_size_large
-                                            }
-
-                                            expand = {}    
-
-                                            textbox = {
-                                                autoresize = yes
-                                                text = "[Multiply_CFixedPoint(InterestGroup.GetClout,'(CFixedPoint)100')|2]%"
-                                            }
-
-                                        }
-
-                                        divider_clean = {
-                                            
-                                            layoutpolicy_horizontal = expanding
-                                        }
-                                    }
-                                }
-
-                                divider_decorative = {
-                                    layoutpolicy_horizontal = expanding
-                                }
-                            }
-                        }
-                    }
-                }
-
-                ## OPPOSITION
-                vbox = {
-                    layoutpolicy_vertical = expanding
-                    layoutpolicy_horizontal = expanding
-                    datamodel = "[AccessPlayer.GetPartiesInOpposition]"
-                    layoutpolicy_horizontal = expanding
-                    autoexpanding = yes
-                    textbox = {
-                        text = "OPPOSTN"
-                        using = font_size_large
-                        background = {
-                            using = default_header_bg_faded
-                        }
-                    }
-
-                    item = {
-                        vbox = {
-                            layoutpolicy_vertical = expanding
-                            layoutpolicy_horizontal = expanding
-                            datamodel = "[Party.GetMembers]"
-
-                            item = {
-                                hbox = {
-                                    layoutpolicy_vertical = expanding
-                                    layoutpolicy_horizontal = expanding
-
-                                    textbox = {
-                                        layoutpolicy_horizontal = expanding
-                                        text = "[InterestGroup.GetName]"
-                                    }
-                                }
-                            }
-                        }
-                    }
+                textbox = {
+                    layoutpolicy_horizontal = fixed
+                    min_width = 150 
+                    text = "CURRENT_ACTIVITY"
+                    autoresize = yes
+                    using = fontsize_large
                 }
                 expand = {}
+                
+                textbox = {
+                    layoutpolicy_horizontal = fixed
+                    text = "IN_RECESS"
+                    autoresize = yes
+                    using = fontsize_large
+                }
             }
+            divider_decorative = {
+                layoutpolicy_horizontal = expanding
+            }
+            textbox = {
+                layoutpolicy_horizontal = expanding
+                text = "NAPPING"
+                autoresize = yes
+                using = fontsize_large
+            }
+            divider_decorative = {
+                layoutpolicy_horizontal = expanding
+            }
+            textbox = {
+                layoutpolicy_horizontal = expanding
+                text = "FILIBUSTERING"
+                autoresize = yes
+                using = fontsize_large
+            }
+            divider_decorative = {
+                layoutpolicy_horizontal = expanding
+            }
+            textbox = {
+                layoutpolicy_horizontal = expanding
+                text = "IGNORING_URGENT_ISSUES"
+                autoresize = yes
+                using = fontsize_large
+            }
+            divider_decorative = {
+                layoutpolicy_horizontal = expanding
+            }
+            textbox = {
+                layoutpolicy_horizontal = expanding
+                text = "PRETENDING_TO_BE_IMPORTANT"
+                autoresize = yes
+                using = fontsize_large
+            }
+            divider_decorative = {
+                layoutpolicy_horizontal = expanding
+            }
+            expand = {}
+            # background = {
+                # using = default_background
+            # }
         }
     }
 }
