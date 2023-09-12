@@ -81,54 +81,109 @@ types politics_panel_types
                         texture = "gfx/interface/backgrounds/round_button_bg.dds"
                         size = { 33% 33% }
                         parentanchor = center
+                        
+                        textbox = {
+                            parentanchor = hcenter|vcenter
+                            align = hcenter|vcenter
+                            position = { 0 -50 }
+                            text = "SEATS"
+                            # using = fontsize_mega
+                            # using = header_font
+                            using = header_font_fancy_size
+                        }
                     }
-                    
+
                     ### MEMBERS
                     vbox = {
                         position = { 0 48% }
                         maximumsize = { 2000 400 }
                         layoutpolicy_horizontal = expanding
+                        using = entry_bg_fancy
                         background = {
                             using = default_background
                         }
-                        
-                        textbox = {
-                            minimumsize = { 500 50 }
-                            layoutpolicy_horizontal = expanding
-                            autoresize = yes
-                            align = hcenter
-                            text = "MEMBERS"
-                            using = fontsize_large
-                            background = {
-                                using = default_header_bg_faded
-                            }
+                        background = {
+                            using = frame_small
                         }
+                        
+                        # textbox = {
+                            # minimumsize = { 500 50 }
+                            # layoutpolicy_horizontal = expanding
+                            # autoresize = yes
+                            # align = hcenter
+                            # text = "MEMBERS"
+                            # using = fontsize_large
+                            # background = {
+                                # using = default_header_bg_faded
+                            # }
+                        # }
 
                         hbox = {
                             layoutpolicy_horizontal = expanding
                             layoutpolicy_vertical = expanding
+                            # margin = { 0 15 }
                         
                             ## GOVERNMENT
-                            parliament_member_panel = {}
+                            vbox = {
+                                layoutpolicy_vertical = expanding
+                                layoutpolicy_horizontal = expanding
+                                
+                                default_header_clean_faded = {
+                                    layoutpolicy_horizontal = expanding
+                                    minimumsize = { 0 65 }
+                                    
+                                    icon = {
+                                        size = { 50 50 }
+                                        parentanchor = center
+                                        position = { -85 0 }
+                                        texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
+                                    }
+                                    
+                                    blockoverride "text" {
+                                        text = "Government"
+                                    }
+                                }
+
+                                parliament_member_panel = {}
+                                expand = {}
+                            }
 
                             vertical_divider_stronger_full = {}
                         
                             ## OPPOSITION
-                            parliament_member_panel = {
-                                blockoverride "datamodel" {
-                                    datamodel = "[AccessPlayer.GetPartiesInOpposition]"
+                            vbox = {
+                                layoutpolicy_vertical = expanding
+                                layoutpolicy_horizontal = expanding
+
+                                default_header_clean_faded = {
+                                    layoutpolicy_horizontal = expanding
+                                    minimumsize = { 0 60 }
+
+                                    icon = {
+                                        size = { 50 50 }
+                                        parentanchor = center
+                                        position = { -85 0 }
+                                        texture = "gfx/interface/icons/generic_icons/in_opposition_icon.dds"
+                                    }
+
+                                    blockoverride "text" {
+                                        text = "Opposition"
+                                    }
                                 }
-                                blockoverride "texture" {
-                                    texture = "gfx/interface/icons/generic_icons/in_opposition_icon.dds"
+                                
+                                parliament_member_panel = {
+                                    blockoverride "datamodel" {
+                                        datamodel = "[AccessPlayer.GetPartiesInOpposition]"
+                                    }
+                                    blockoverride "texture" {
+                                        texture = "gfx/interface/icons/generic_icons/in_opposition_icon.dds"
+                                    }
+                                    blockoverride "text" {
+                                        text = "OPPOSTN"
+                                    }
                                 }
-                                blockoverride "text" {
-                                    text = "OPPOSTN"
-                                }
+                                expand = {}
                             }
-                            # vbox = {
-                                # layoutpolicy_vertical = expanding
-                                # expand = {}
-                            # }
                         }
                     }
                 }
@@ -259,40 +314,45 @@ types politics_panel_types
     }
 
     type parliament_member_panel = vbox {
-        layoutpolicy_vertical = expaning
+        layoutpolicy_vertical = preffered
         layoutpolicy_horizontal = expanding
         margin = { 10 0 }
+        SPACING = 5
         block "datamodel" {
             datamodel = "[AccessPlayer.GetPartiesInGovernment]"
         }
         
-        hbox = {
-            layoutpolicy_horizontal = expanding
-            
-            icon = {
-                size = { 50 50 }
-                block "texture" {
-                    texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-                }
-            }
-            
-            textbox = {
-                layoutpolicy_horizontal = expanding
-                block "text" {
-                    text = "GUVMENT"
-                }
-                autoresize = yes
-                using = font_size_large
-                
-            }
         
-        }
+        # hbox = {
+            # layoutpolicy_horizontal = expanding
+            # minimumsize = { 0 70 }
+            # expand = {}
+            # 
+            # icon = {
+                # size = { 50 50 }
+                # block "texture" {
+                    # texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
+                # }
+            # }
+            # 
+            # textbox = {
+                # layoutpolicy_horizontal = growing
+                # block "text" {
+                    # text = "GUVMENT"
+                # }
+                # autoresize = yes
+                # using = font_size_large
+            # }
+# 
+            # background = {
+                # using = default_header_bg_faded
+            # }
+        # }
     
         # PARTIES
         item = {
             vbox = {
                 layoutpolicy_horizontal = expanding
-                # layoutpolicy_vertical = expanding
 
                 background = {
                     using = simple_frame
@@ -301,7 +361,6 @@ types politics_panel_types
                 # header
                 hbox = {
                     layoutpolicy_horizontal = expanding
-                    # layoutpolicy_vertical = expanding
                     
                     icon = {
                         texture = "[Party.GetIcon]"
@@ -310,7 +369,6 @@ types politics_panel_types
                 
                     textbox = {
                         layoutpolicy_horizontal = expanding
-                        # layoutpolicy_vertical = expanding
                         minimumsize = { 0 50 }
                         text = "[Party.GetName]"
                         using = font_size_large
@@ -332,14 +390,13 @@ types politics_panel_types
                 # members
                 vbox = {
                     layoutpolicy_horizontal = expanding
-                    # layoutpolicy_vertical = expanding
                     datamodel = "[Party.GetMembers]"
                     spacing = 5
                 
                     item = {
                         vbox = {
                             layoutpolicy_horizontal = expanding
-                            # layoutpolicy_vertical = expanding
+                            spacing = 5
 
                             background = {
                                 texture = "gfx/interface/tooltip/tooltip_title_bg.dds"
@@ -353,11 +410,11 @@ types politics_panel_types
                         
                             hbox = {
                                 layoutpolicy_horizontal = expanding
-                                # layoutpolicy_vertical = expanding
-                                icon = {
-                                    size = { 40 40 }
-                                    texture = "[InterestGroup.GetIcon]"
-                                }
+                                margin = { 20 0 }
+                                # icon = {
+                                    # size = { 40 40 }
+                                    # texture = "[InterestGroup.GetIcon]"
+                                # }
                                 textbox = {
                                     autoresize = yes
                                     text = "[InterestGroup.GetName]"
@@ -388,6 +445,7 @@ types politics_panel_types
 
     type activity_placeholder = vbox {
         MARGIN = { 10 0 }
+        spacing = 10
         layoutpolicy_horizontal = expanding
         textbox = {
             layoutpolicy_horizontal = expanding
