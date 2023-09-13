@@ -729,19 +729,25 @@ types politics_panel_types
 							# align = right
 						# }
 
-						add_character_button = {
+						character_portrait_large = {
 							# size = { 75 75 }
-							blockoverride "onclick" {
-								onclick = "[GetVariableSystem.Toggle('politics_assign_cabinet')]"
-								onclick = "[AgitatorSlot.EnableInvite]"
-								clicksound = "event:/SFX/DLC/1.3_ip1/UI/exile_pool_open"
+
+						}
+
+						hbox = {
+							layoutpolicy_horizontal = growing
+							layoutpolicy_vertical = growing
+							datamodel = "[AccessPlayer.AccessInstitutions]"
+							
+							item = {
+								character_portrait_medium = {}
 							}
 						}
 
-						# expand = {}
+						expand = {}
 
 						button = {
-							using = default_button_action
+							using = default_button_primary_action
 							size = { 250 40 }
 							text = "DISMISS_GOVERNMENT"
 						}
@@ -919,9 +925,9 @@ types politics_panel_types
 
 		### CABINET ASSIGNMENT WINDOW
 		cabinet_assignment_window = {
-			blockoverride "text" {
-				text = "ASSIGN_HEAD_OF_GOVERNMENT"
-			}
+			# blockoverride "text" {
+				# text = "ASSIGN_HEAD_OF_GOVERNMENT"
+			# }
 		}
 	}
 
@@ -1177,9 +1183,41 @@ types politics_panel_types
 			datamodel = "[AccessPlayer.AccessInstitutions]"
 			spacing = 5
 
+			hbox = {
+				layoutpolicy_horizontal = expanding
+				spacing = 30
+				
+				icon = {
+					size = { 55 55 }
+					texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
+					using = tooltip_es
+				}
+				textbox = {
+					layoutpolicy_horizontal = expanding
+					size = { 0 30 }
+					text = "Head of Government"
+					using = fontsize_large
+					using = fontsize_large
+				}
+				add_character_button = {
+					size = { 60 60 }
+					blockoverride "onclick" {
+						onclick = "[GetVariableSystem.Toggle('politics_assign_cabinet')]"
+						# onclick = "[AgitatorSlot.EnableInvite]"
+						clicksound = "event:/SFX/DLC/1.3_ip1/UI/exile_pool_open"
+					}
+				}
+				button = {
+					using = default_button_action
+					size = { 150 40 }
+					text = "DISMISS"
+				}
+			}
+
 			item = {
 				hbox = {
 					layoutpolicy_horizontal = expanding
+					spacing = 30
 					
 					institution_icon = {
 						size = { 70 70 }
@@ -1200,6 +1238,11 @@ types politics_panel_types
 
 					add_character_button = {
 						size = { 60 60 }
+						blockoverride "onclick" {
+						onclick = "[GetVariableSystem.Toggle('politics_assign_cabinet')]"
+						# onclick = "[AgitatorSlot.EnableInvite]"
+						clicksound = "event:/SFX/DLC/1.3_ip1/UI/exile_pool_open"
+					}
 					}
 
 					button = {
@@ -1245,7 +1288,7 @@ types politics_panel_types
 			spacing = 5
 			margin = { 5 8 }
 			layoutpolicy_horizontal = preferred
-			tooltip = IN_OPPOSITION_DESC
+			# tooltip = IN_OPPOSITION_DESC
 			background = {
 				using = default_header_bg_faded
 			}
@@ -1258,23 +1301,23 @@ types politics_panel_types
 			hbox = {
 				layoutpolicy_horizontal = preferred
 				layoutpolicy_vertical = preferred
-				tooltip = IN_OPPOSITION_DESC
+				# tooltip = IN_OPPOSITION_DESC
 				spacing = 10
 			
 				textbox = {
 					autoresize = yes
 					block "text" {
-						text = "ASSIGN_MINISTER"
+						text = "ASSIGN_MEMBER_OF_CABINET"
 					} 
 					align = right|nobaseline
 					elide = right
 					default_format = "#title"
 					using = fontsize_large
 				}
-				icon = {
-					texture = "gfx/interface/icons/generic_icons/in_opposition_icon.dds"
-					size = { 30 30 }
-				}
+				# icon = {
+					# texture = "gfx/interface/icons/generic_icons/in_opposition_icon.dds"
+					# size = { 30 30 }
+				# }
 			}
 		}
 		### CANDIDATES

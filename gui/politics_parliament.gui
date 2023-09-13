@@ -447,7 +447,6 @@ types politics_panel_types
 				layoutpolicy_horizontal = preferred
 			}
 			blockoverride "left_text" {
-				# datacontext = "[ReformGovernment]"
 				block "laws_with_support_header" {
 					text = "NEXT_ACTIVITIES"
 				}
