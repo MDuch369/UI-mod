@@ -215,47 +215,19 @@ types politics_panel_types
                 margin = { 10 10 }
                 layoutpolicy_vertical = growing
                 layoutpolicy_horizontal = expanding
-               
 
+                position_portrait = {
 
-                hbox = {
-                    layoutpolicy_horizontal = expanding
-                    icon = {
-						texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						size = { 50 50 }
-                        # align = left
-					}
-                    textbox = {
-                        text = "SPEAKER"
-                        autoresize = yes
-                    }
-                    expand = {}
                 }
-
-                hbox = {
-                    layoutpolicy_horizontal = expanding
-                    icon = {
-						texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						size = { 50 50 }
-					}
-                    textbox = {
+                position_portrait = {
+                    blockoverride "text" {
                         text = "HEAD_OF_MAJORITY"
-                        autoresize = yes
                     }
-                    expand = {}
                 }
-
-                hbox = {
-                    layoutpolicy_horizontal = expanding
-                    icon = {
-						texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-						size = { 50 50 }
-					}
-                    textbox = {
+                position_portrait = {
+                    blockoverride "text" {
                         text = "HEAD_OF_MINORITY"
-                        autoresize = yes
                     }
-                    expand = {}
                 }
             }
 
@@ -321,33 +293,6 @@ types politics_panel_types
         block "datamodel" {
             datamodel = "[AccessPlayer.GetPartiesInGovernment]"
         }
-        
-        
-        # hbox = {
-            # layoutpolicy_horizontal = expanding
-            # minimumsize = { 0 70 }
-            # expand = {}
-            # 
-            # icon = {
-                # size = { 50 50 }
-                # block "texture" {
-                    # texture = "gfx/interface/icons/generic_icons/in_government_icon.dds"
-                # }
-            # }
-            # 
-            # textbox = {
-                # layoutpolicy_horizontal = growing
-                # block "text" {
-                    # text = "GUVMENT"
-                # }
-                # autoresize = yes
-                # using = font_size_large
-            # }
-# 
-            # background = {
-                # using = default_header_bg_faded
-            # }
-        # }
     
         # PARTIES
         item = {
@@ -441,6 +386,20 @@ types politics_panel_types
                 }
             }
         }
+    }
+
+    type position_portrait = hbox {
+        layoutpolicy_horizontal = expanding
+        spacing = 20
+        character_portrait_medium = {}
+        
+        textbox = {
+            block "text" {
+                text = "SPEAKER"
+            }
+            autoresize = yes
+        }
+        expand = {}
     }
 
     type activity_placeholder = vbox {
