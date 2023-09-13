@@ -244,7 +244,31 @@ types politics_panel_types
             }
             
             hbox = {
-                margin = { 10 0 }
+                margin = { 10 10 }
+                layoutpolicy_horizontal = expanding
+                
+                textbox = {
+                    layoutpolicy_horizontal = fixed
+                    min_width = 150 
+                    text = "NEXT_SESSION"
+                    autoresize = yes
+                    using = fontsize_large
+                }
+                expand = {}
+                
+                textbox = {
+                    layoutpolicy_horizontal = fixed
+                    text = "MAYBE_SOMEDAY"
+                    autoresize = yes
+                    using = fontsize_large
+                }
+            }
+            divider_decorative = {
+                layoutpolicy_horizontal = expanding
+            }
+
+            hbox = {
+                margin = { 10 10 }
                 layoutpolicy_horizontal = expanding
                 
                 textbox = {
@@ -258,29 +282,37 @@ types politics_panel_types
                 
                 textbox = {
                     layoutpolicy_horizontal = fixed
-                    text = "IN_RECESS"
+                    text = "RECESS"
                     autoresize = yes
                     using = fontsize_large
                 }
             }
-            divider_decorative = {
-                layoutpolicy_horizontal = expanding
-            }
-            activity_placeholder = {
-                blockoverride "text" { text = "NAPPING" }
-            }
-            activity_placeholder = {
-                blockoverride "text" { text = "FILIBUSTERING" }
-            }
-            activity_placeholder = {
-                blockoverride "text" { text = "IGNORING_URGENT_ISSUES" }
-            }
-            activity_placeholder = {
-                blockoverride "text" { text = "DEFRAUDING_PUBLIC_MONEY" }
-            }
-            activity_placeholder = {
-                blockoverride "text" { text = "PRETENDING_TO_BE_IMPORTANT" }
-            }
+            # divider_decorative = {
+                # layoutpolicy_horizontal = expanding
+            # }
+
+            # hbox = {
+                # margin = { 10 10 }
+                # layoutpolicy_horizontal = expanding
+                # 
+                # textbox = {
+                    # layoutpolicy_horizontal = fixed
+                    # min_width = 150 
+                    # text = "NEXT"
+                    # autoresize = yes
+                    # using = fontsize_large
+                # }
+                # expand = {}
+            # }
+
+            parliament_agenda_list = {}
+            
+            # divider_decorative = {
+                # layoutpolicy_horizontal = expanding
+            # }
+
+            # agenda_list_placeholder = {}
+
             expand = {}
         }
     }
@@ -402,10 +434,117 @@ types politics_panel_types
         expand = {}
     }
 
+    type parliament_agenda_list = vbox {
+		layoutpolicy_horizontal = expanding
+		layoutpolicy_vertical = preferred
+
+		### PARLIAMENT AGENDA BUTTON
+		section_header_button = {
+			name = "parliament_agenda"
+			
+			blockoverride "layout" {
+				size = { 0 38 }
+				layoutpolicy_horizontal = preferred
+			}
+			blockoverride "left_text" {
+				# datacontext = "[ReformGovernment]"
+				block "laws_with_support_header" {
+					text = "NEXT_ACTIVITIES"
+				}
+			}
+			# blockoverride "right_text" {
+				# block "laws_has_changed_text" {
+					# textbox = {
+						# visible = "[ReformGovernment.HasPredictedLawsWithGovernmentOrMovementSupportChanged]"
+						# datacontext = "[ReformGovernment]"
+						# text = "LAWS_HAS_CHANGED"
+						# autoresize = yes
+						# margin_left = 10
+						# margin_right = 25
+						# align = nobaseline
+						# using = fontsize_large
+						# alwaystransparent = yes
+						# using = look_at_me_text_animation
+					# }
+				# }
+			# }
+
+			blockoverride "onclick" {
+				onclick = "[GetVariableSystem.Toggle('parliament_agenda_expanded')]"
+			}
+			
+			blockoverride "onclick_showmore" {
+				visible = "[Not(GetVariableSystem.Exists('parliament_agenda_expanded'))]"
+			}
+
+			blockoverride "onclick_showless" {
+				visible = "[GetVariableSystem.Exists('parliament_agenda_expanded')]"
+			}
+		}
+		
+		### THE LIST
+		scrollarea = {
+			margin = { 0 8 }
+			layoutpolicy_horizontal = preferred
+			layoutpolicy_vertical = preferred
+			visible = "[GetVariableSystem.Exists('parliament_agenda_expanded')]"
+			# datamodel = "[AccessPlayer.AccessInstitutions]"
+			spacing = 5
+
+            scrollwidget = {
+                agenda_list_placeholder = {
+                    layoutpolicy_horizontal = expanding
+                    layoutpolicy_vertical = expanding
+                }
+            }
+
+            scrollbar_vertical = {
+				using = vertical_scrollbar
+			}
+
+			# item = {
+				# hbox = {
+					# layoutpolicy_horizontal = expanding
+					# 
+					# institution_icon = {
+						# size = { 70 70 }
+						# 
+						# using = tooltip_es
+						# tooltipwidget = {
+							# FancyTooltip_Institution = {}
+						# }
+					# }
+# 
+					# textbox = {
+						# layoutpolicy_horizontal = expanding
+						# size = { 0 30 }
+						# text = "Ministry of [Institution.GetNameNoFormatting]"
+						# using = fontsize_large
+						# using = fontsize_large
+					# }
+# 
+					# add_character_button = {
+						# size = { 60 60 }
+					# }
+# 
+					# button = {
+						# using = default_button_action
+						# size = { 150 40 }
+						# text = "DISMISS"
+					# }
+				# }
+			# }
+		}
+        
+        expand = {
+            visible = "[Not(GetVariableSystem.Exists('parliament_agenda_expanded'))]"
+        }
+	}
+
     type activity_placeholder = vbox {
-        MARGIN = { 10 0 }
-        spacing = 10
         layoutpolicy_horizontal = expanding
+        margin = { 40 0 }
+        spacing = 10
         textbox = {
             layoutpolicy_horizontal = expanding
             autoresize = yes
@@ -416,6 +555,25 @@ types politics_panel_types
         } 
         divider_decorative = {
             layoutpolicy_horizontal = expanding
+        }
+    }
+
+    type agenda_list_placeholder = vbox {
+        
+        activity_placeholder = {
+            blockoverride "text" { text = "NAPPING" }
+        }
+        activity_placeholder = {
+            blockoverride "text" { text = "FILIBUSTERING" }
+        }
+        activity_placeholder = {
+            blockoverride "text" { text = "IGNORING_URGENT_ISSUES" }
+        }
+        activity_placeholder = {
+            blockoverride "text" { text = "DEFRAUDING_PUBLIC_MONEY" }
+        }
+        activity_placeholder = {
+            blockoverride "text" { text = "PRETENDING_TO_BE_IMPORTANT" }
         }
     }
 }
