@@ -29,7 +29,7 @@ types politics_panel_types
 		}
 			
 		fullscreen_scrollarea = {
-			visible = "[Not(GetVariableSystem.Exists('reform_government'))]"
+			visible = "[And(Not(GetVariableSystem.Exists('reform_government')),Not(GetVariableSystem.Exists('constitution')) )]"
 
 			blockoverride "scrollarea_content" {
 				politics_panel_government_details = {}
@@ -37,10 +37,18 @@ types politics_panel_types
 		}	
 				
 		fullscreen_scrollarea = {
-			visible = "[GetVariableSystem.Exists('reform_government')]"
+			visible = "[And(GetVariableSystem.Exists('reform_government'),Not(GetVariableSystem.Exists('constitution')) )]"
 
 			blockoverride "scrollarea_content" {
 				politics_panel_government_reform = {}
+			}
+		}
+
+		fullscreen_scrollarea = {
+			visible = "[GetVariableSystem.Exists('constitution')]"
+
+			blockoverride "scrollarea_content" {
+				constitution_window = {}
 			}
 		}
 		
@@ -84,6 +92,19 @@ types politics_panel_types
 				}
 			}
 			
+			button = {
+				size = { 400 45 }
+				using = default_button_primary
+				onclick = "[GetVariableSystem.Toggle('constitution')]"
+				
+				textbox = {
+					size = { 100% 100% }
+					text = "VIEW_CONSTITUTION"
+					using = fontsize_large
+					align = center|nobaseline
+				}
+			}
+
 			widget = { size = { 10 10 }}
 
 			button = {
@@ -210,6 +231,7 @@ types politics_panel_types
 		### GOVERNMENT
 		vbox = {
 			name = "tutorial_highlight_whole_government"
+
 			margin_right = 10
 			margin_left = 5
 			layoutstretchfactor_horizontal = 3
@@ -580,6 +602,28 @@ types politics_panel_types
 						}
 					}
 				}
+
+				# button_icon_square_action = {
+					# size = { 80 80 }
+					# onclick = "[GetVariableSystem.Toggle('constitution')]"
+					# blockoverride "onclick" {
+					# }
+					
+					# blockoverride "onclick_showmore" {
+						# visible = "[Not(GetVariableSystem.Exists('constitution'))]"
+					# }
+		# 
+					# blockoverride "onclick_showless" {
+						# visible = "[GetVariableSystem.Exists('constitution')]"
+					# }
+				# }
+
+				# button = {
+					# using = default_button_primary_action
+					# size = { 250 40 }
+					# text = "DISMISS_GOVERNMENT"
+				# }
+
 			}
 			
 			### BUTTONS
@@ -1455,6 +1499,318 @@ types politics_panel_types
 					# parentanchor = right
 					size = { 150 40 }
 					text = "ASSIGN"
+				}
+			}
+		}
+	}
+
+	type constitution_window = vbox {
+		visible = "[GetVariableSystem.Exists('constitution')]"
+		layoutpolicy_horizontal = expanding
+		layoutpolicy_vertical = expanding
+
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			layoutpolicy_vertical = expanding
+
+			### CONSTITUTION TEXT
+			vbox = {
+				name = "constitution_text"
+				layoutpolicy_horizontal = expanding
+				layoutpolicy_vertical = expanding
+				# margin = 20
+
+				background = {
+					using = paper_bg
+				}
+
+				textbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					align = center
+					multiline = yes
+					using = header_font_fancy
+					using = header_font_fancy_size
+					text = "CONSTITUTION"
+				}
+
+				textbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					multiline = yes
+					using = header_font
+					using = header_font_size
+					text = "    We the ruler of our gloriuos nation decided in our infinite wisdom, and not forced but massess of revolting commoners, to grant our gloriuos nation, full of massess of revolting commoners, a constitution. Quite nifty innit? We promise to uphold its principles, ant not to promptly ignore them. We also promise that We will not introduce state of emergency at the first opportunity we got under extremaly tenuous pretext. Finally We especially promise that We will not very conveniently forget to repeal said state of emergency, which does not expire of its own for some inexplicable reason (wink, wink), for the next forty years or so."
+				}
+				textbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					multiline = yes
+					using = header_font
+					using = font_size_xl
+					text = "    1. We will not imprison our subjects for looking stupid, nor for being stupid (frankly, being stupid is already a punishment on its own), nor will we confiscate the property. We reserve the right however to tell them to go be stupid somwhere else."
+				}
+				textbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					multiline = yes
+					using = header_font
+					using = font_size_xl
+					text = "    2. We stipulate that the illostrious government of our glorious nation shall be divided in three parts, as to ensure thet no one branch cumulates all the power. We also promise not to stuff said branches full of ours sycophants."
+				}
+				textbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					multiline = yes
+					using = header_font
+					using = font_size_xl
+					text = "    3. We promise not to imprison our subjects for saying shit we do not like."
+				}
+				textbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					multiline = yes
+					using = header_font
+					using = font_size_xl
+					text = "    4. Our nation should be ruled as a monarchy, do not even think about becoming republic you dumb fucks or i will end you."
+				}
+				textbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					multiline = yes
+					using = header_font
+					using = font_size_xl
+					text = "    6. We will have a glourious parliament, that will totally not be just for rubberstamping my laws. Oh ond you cannot get inside it if you are too poor. And no, you also do not get to decide who seats in it if you are poor loser. Seriously have you guys tried just not being poor"
+				}
+				textbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					multiline = yes
+					using = header_font
+					using = font_size_xl
+					text = "    7. Also if you do not speak our gloriuos language, or do not have our glorious ancestry parents, better forget about getting citizenship"
+				}
+				textbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					multiline = yes
+					using = header_font
+					using = font_size_xl
+					text = "    8. We will also allow ummm.... trading of ehhhh... ummm... 'nonconsensual labourers'. And no, it is totally not slavery, it is called 'Indentured Servitude' for fucks sake, tthese are totally different things. Seriously we abhor slavery and would allow no such thing, so if we allow this it means it is just trade in ummm... 'less-than-free people' and not slavery at all, got it?"
+				}
+				textbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					multiline = yes
+					using = header_font
+					using = font_size_xl
+					text = "    9. Some other stuff the nerds drafting this constitution added, seriously i cannot be bothered to read all this crap, its not like I care about it anyway."
+				}				
+			}
+			
+			vertical_divider_stronger_full = {}
+
+			### LAWS
+			vbox = {
+				name = "constitution_laws"
+				# layoutpolicy_horizontal = expanding
+				layoutpolicy_vertical = expanding
+
+				default_header_clean_faded = {
+					# layoutpolicy_horizontal = expanding
+					blockoverride "text" {
+						text = "Constiutional laws"
+					}
+				}
+
+				### LAW LIST
+				vbox = { # plceholder, should be a scrollarea
+					layoutpolicy_horizontal = growing
+					margin = { 10 0 }
+					spacing = 15
+				
+					constitutional_law_box = {
+						blockoverride "law_type" {
+							text = "power_structure"
+						}
+						blockoverride "law_category" {
+							text = "governing_principles"
+						}
+						blockoverride "law_name" {
+							text = "monarchy"
+						}
+					}
+
+					constitutional_law_box = {
+						blockoverride "law_type" {
+							text = "power_structure"
+						}
+						blockoverride "law_category" {
+							text = "distribution_of_power"
+						}
+						blockoverride "law_name" {
+							text = "wealth_voting"
+						}
+						blockoverride "law_texture" {
+							texture = gfx/interface/icons/law_icons/wealth_voting.dds
+						}			
+					}
+
+					constitutional_law_box = {
+						blockoverride "law_type" {
+							text = "power_structure"
+						}
+						blockoverride "law_category" {
+							text = "citizenship"
+						}
+						blockoverride "law_name" {
+							text = "cultural_exclusion"
+						}
+						blockoverride "law_texture" {
+							texture = gfx/interface/icons/law_icons/cultural_exclusion.dds
+						}
+						blockoverride "law_constitutionality" {
+							# texture = gfx/interface/icons/generic_icons/disapproval_icon.dds
+							texture = gfx/interface/icons/generic_icons/red_cross.dds
+							
+						}			
+					}
+
+					constitutional_law_box = {
+						blockoverride "law_type" {
+							text = "human_rights"
+						}
+						blockoverride "law_category" {
+							text = "slavery"
+						}
+						blockoverride "law_name" {
+							text = "slave_trade"
+						}
+						blockoverride "law_texture" {
+							texture = gfx/interface/icons/law_icons/slave_trade.dds
+						}			
+					}
+				}
+
+				expand = {}
+				
+				# header = {
+					# layoutpolicy_horizontal = expanding
+
+					# blockoverride "text" {
+						# text = "Constiutional laws"
+					# }
+				# }
+
+			}
+		}
+
+		### ACTION BUTTONS
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			# layoutpolicy_vertical = expanding
+
+			button = {
+				# layoutpolicy_horizontal = expanding
+				# layoutpolicy_vertical = expanding
+				using = default_button_primary_action
+				size = { 400 45 }
+				text = "NEW_CONSTITUTION"
+			}
+
+			button = {
+				# layoutpolicy_horizontal = expanding
+				# layoutpolicy_vertical = expanding
+				using = default_button_primary_action
+				size = { 400 45 }
+				text = "SUSPEND_CONSTITUTION"
+			}
+			button = {
+				# layoutpolicy_horizontal = expanding
+				# layoutpolicy_vertical = expanding
+				using = default_button_primary_action
+				size = { 400 45 }
+				text = "AMEND_CONSTITUTION"
+			}
+
+		}
+	}
+
+	### LAW BOX
+	type constitutional_law_box = vbox { # plceholder, should be a template
+		# layoutpolicy_vertical = growing
+		layoutpolicy_horizontal = growing
+		margin = { 10 5 }
+		spacing = 10
+
+		background = {
+			using = simple_frame
+			using = entry_bg_simple
+		}
+
+		hbox = {
+			layoutpolicy_horizontal = growing
+
+			textbox = {
+				layoutpolicy_horizontal = growing
+				autoresize = yes
+				# text = "law_category"
+				block "law_type" {
+					text = ""
+				}
+				using = fontsize_large
+			}
+
+			expand = {}
+
+			textbox = {
+				layoutpolicy_horizontal = growing
+				autoresize = yes
+				# text = "law_type"
+				block "law_category" {
+					text = ""
+				}
+				using = fontsize_large
+			}
+		}
+
+		divider_clean = {
+			layoutpolicy_horizontal = growing
+		}
+
+		hbox = {
+			layoutpolicy_horizontal = growing
+			spacing = 5
+
+			# law icon
+			icon = {
+				size = { 90 90 }
+				block "law_texture" {
+					texture = gfx/interface/icons/law_icons/monarchy.dds
+				}
+			}
+
+			vertical_divider = {}
+
+			# law name
+			textbox = {
+				layoutpolicy_horizontal = growing
+				autoresize = yes
+				# text = "law_name"
+				block "law_name" {
+					text = ""
+				}
+				using = fontsize_xxl
+			}
+
+			vertical_divider = {}
+
+			# constitutionality icon
+			icon = {
+				size = { 90 90 }
+				block "law_constitutionality" {
+					# texture = gfx/interface/icons/generic_icons/green_checkmark.dds
+					texture = gfx/interface/icons/generic_icons/checkmark.dds
 				}
 			}
 		}
